@@ -1,0 +1,27 @@
+{
+    "name": "zahzah/module-regional",
+    "autoload": {
+        "psr-4": {
+            "Zahzah\\ModuleRegional\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hamzah",
+            "email": "hamzahnuralfalah@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zahzah\\ModuleRegional\\ModuleRegionalServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "zahzah/laravel-has-props": "1.x",
+        "zahzah/laravel-support": "1.x"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false
+}
