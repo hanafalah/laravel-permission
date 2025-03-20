@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Zahzah\ModuleRegional;
-use Zahzah\LaravelSupport\Providers\BaseServiceProvider;
+namespace Hanafalah\ModuleRegional;
+
+use Hanafalah\LaravelSupport\Providers\BaseServiceProvider;
 
 class ModuleRegionalServiceProvider extends BaseServiceProvider
 {
@@ -15,15 +16,15 @@ class ModuleRegionalServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->registerMainClass(ModuleRegional::class)
-             ->registerCommandService(Providers\CommandServiceProvider::class)
-             ->registers([
+            ->registerCommandService(Providers\CommandServiceProvider::class)
+            ->registers([
                 '*',
-                'Namespace' => function(){
+                'Namespace' => function () {
                     $this->publishes([
                         $this->getAssetPath('/database/migrations/data') => database_path('data'),
-                    ], 'data'); 
-                }, 
-                'Services' => function(){
+                    ], 'data');
+                },
+                'Services' => function () {
                     $this->binds([
                         Contracts\ModuleRegional::class => new ModuleRegional
                     ]);
@@ -36,11 +37,13 @@ class ModuleRegionalServiceProvider extends BaseServiceProvider
      *
      * @return string
      */
-    protected function dir(): string{
-        return __DIR__.'/';
+    protected function dir(): string
+    {
+        return __DIR__ . '/';
     }
 
-    protected function migrationPath(string $path = ''): string{
+    protected function migrationPath(string $path = ''): string
+    {
         return database_path($path);
     }
 }

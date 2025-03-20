@@ -1,18 +1,20 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Schemas;
+namespace Hanafalah\ModuleRegional\Schemas;
 
-use Zahzah\LaravelSupport\Contracts\DataManagement;
-use Zahzah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
-class Village extends PackageManagement implements DataManagement{
-    public function booting(): self{
+class Village extends PackageManagement implements DataManagement
+{
+    public function booting(): self
+    {
         static::$__class = $this;
-        static::$__model = $this->{$this->__entity."Model"}();
+        static::$__model = $this->{$this->__entity . "Model"}();
         return $this;
-}
+    }
 
-protected array $__guard   = ['id', 'village_id', 'district_id', 'province_id', 'code', 'name']; 
+    protected array $__guard   = ['id', 'village_id', 'district_id', 'province_id', 'code', 'name'];
     protected array $__add     = ['village_id', 'district_id', 'province_id', 'code', 'name'];
     protected string $__entity = 'Village';
 
@@ -25,7 +27,8 @@ protected array $__guard   = ['id', 'village_id', 'district_id', 'province_id', 
      *
      * @return \Illuminate\Database\Eloquent\Model The API access model.
      */
-    public function addOrChange(? array $attributes=[]): self{    
+    public function addOrChange(?array $attributes = []): self
+    {
         $this->updateOrCreate($attributes);
         return $this;
     }

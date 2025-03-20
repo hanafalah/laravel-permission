@@ -1,11 +1,12 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Resources\Address;
+namespace Hanafalah\ModuleRegional\Resources\Address;
 
 use Illuminate\Http\Request;
-use Zahzah\LaravelSupport\Resources\ApiResource;
+use Hanafalah\LaravelSupport\Resources\ApiResource;
 
-class ShowAddress extends ApiResource{
+class ShowAddress extends ApiResource
+{
 
     /**
      * Transform the resource into an array.
@@ -24,7 +25,7 @@ class ShowAddress extends ApiResource{
             'subdistrict_name'  => $this->prop_subdistrict->name ?? null,
             'village_name'      => $this->prop_village->name ?? null
         ];
-        
+
         return $arr;
     }
 }

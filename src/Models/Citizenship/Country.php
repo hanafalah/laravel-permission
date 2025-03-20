@@ -1,12 +1,12 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Models\Citizenship;
+namespace Hanafalah\ModuleRegional\Models\Citizenship;
 
-use Zahzah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelSupport\Models\BaseModel;
 
 class Country extends BaseModel
 {
   const INDONESIA       = 101;
   public $timestamps    = false;
-  protected $fillable   = ["id","country_code","name"];
+  protected $fillable   = ["id", "country_code", "name"];
 }

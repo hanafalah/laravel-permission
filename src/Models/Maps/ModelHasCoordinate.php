@@ -1,13 +1,17 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Models\Maps;
+namespace Hanafalah\ModuleRegional\Models\Maps;
 
-use Zahzah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelSupport\Models\BaseModel;
 
-class ModelHasCoordinate extends BaseModel{
-    protected $fillable = ['id','model_id','model_type','coordinate'];
+class ModelHasCoordinate extends BaseModel
+{
+    protected $fillable = ['id', 'model_id', 'model_type', 'coordinate'];
 
     //EIGER SECTION
-    public function model(){return $this->morphTo();}
+    public function model()
+    {
+        return $this->morphTo();
+    }
     //END EIGER SECTION
 }

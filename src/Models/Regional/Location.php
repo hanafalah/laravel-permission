@@ -1,14 +1,19 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Models\Regional;
+namespace Hanafalah\ModuleRegional\Models\Regional;
 
-use Zahzah\LaravelHasProps\Concerns\HasProps;
-use Zahzah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelHasProps\Concerns\HasProps;
+use Hanafalah\LaravelSupport\Models\BaseModel;
 
-class Location extends BaseModel{
+class Location extends BaseModel
+{
     use HasProps;
 
     protected $fillable = [
-        'id','code','name','latitude','longitude'
+        'id',
+        'code',
+        'name',
+        'latitude',
+        'longitude'
     ];
 }

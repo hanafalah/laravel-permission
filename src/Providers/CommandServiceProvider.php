@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Zahzah\ModuleRegional\Providers;
+namespace Hanafalah\ModuleRegional\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zahzah\ModuleRegional\Commands;
+use Hanafalah\ModuleRegional\Commands;
 
 class CommandServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,8 @@ class CommandServiceProvider extends ServiceProvider
     ];
 
 
-    public function register(){
+    public function register()
+    {
         $this->commands(config('module-regional.commands', $this->commands));
     }
     /**

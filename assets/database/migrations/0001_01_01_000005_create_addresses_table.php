@@ -3,20 +3,23 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Zahzah\ModuleRegional\Models\Regional\{
-    Address, District, Province,
+use Hanafalah\ModuleRegional\Models\Regional\{
+    Address,
+    District,
+    Province,
     Subdistrict,
     Village
 };
-use Zahzah\ModuleRegional\Enums\Address\Flag;
+use Hanafalah\ModuleRegional\Enums\Address\Flag;
 
 return new class extends Migration
 {
-   use Zahzah\LaravelSupport\Concerns\NowYouSeeMe;
+    use Hanafalah\LaravelSupport\Concerns\NowYouSeeMe;
 
     private $__table;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->__table = app(config('database.models.Address', Address::class));
     }
 
@@ -28,7 +31,7 @@ return new class extends Migration
     public function up(): void
     {
         $table_name = $this->__table->getTable();
-        if (!$this->isTableExists()){
+        if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
                 $province    = app(config('database.models.Province', Province::class));
                 $district    = app(config('database.models.District', District::class));
@@ -37,31 +40,31 @@ return new class extends Migration
 
                 $table->id();
                 $table->text('name')->nullable(false);
-                $table->string('model_type',50)->nullable(false);
-                $table->string('model_id',36)->nullable(false);
-                $table->enum('flag',[
+                $table->string('model_type', 50)->nullable(false);
+                $table->string('model_id', 36)->nullable(false);
+                $table->enum('flag', [
                     Flag::ID_CARD->value,
                     Flag::RESIDENCE->value,
                     Flag::OTHER->value
                 ])->nullable(false);
 
                 $table->foreignIdFor($province::class)->nullable(true)->index()
-                      ->cascadeOnUpdate()->cascadeOnDelete();
+                    ->cascadeOnUpdate()->cascadeOnDelete();
 
                 $table->foreignIdFor($district::class)->nullable(true)->index()
-                      ->cascadeOnUpdate()->cascadeOnDelete();
+                    ->cascadeOnUpdate()->cascadeOnDelete();
 
                 $table->foreignIdFor($subdistrict::class)->nullable(true)->index()
-                      ->cascadeOnUpdate()->cascadeOnDelete();
+                    ->cascadeOnUpdate()->cascadeOnDelete();
 
                 $table->foreignIdFor($village::class)->nullable(true)->index()
-                      ->cascadeOnUpdate()->cascadeOnDelete();
+                    ->cascadeOnUpdate()->cascadeOnDelete();
 
                 $table->json('props')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 
-                $table->index(['model_type','model_id']);
+                $table->index(['model_type', 'model_id']);
             });
         }
     }

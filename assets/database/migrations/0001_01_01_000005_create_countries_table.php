@@ -3,16 +3,17 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Zahzah\ModuleRegional\Models\Citizenship\Country;
-use Zahzah\ModuleRegional\ModuleRegional;
+use Hanafalah\ModuleRegional\Models\Citizenship\Country;
+use Hanafalah\ModuleRegional\ModuleRegional;
 
 return new class extends Migration
 {
-   use Zahzah\LaravelSupport\Concerns\NowYouSeeMe;
+    use Hanafalah\LaravelSupport\Concerns\NowYouSeeMe;
 
     private $__table;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->__table = app(config('database.models.Country', Country::class));
     }
 
@@ -24,14 +25,14 @@ return new class extends Migration
     public function up(): void
     {
         $table_name = $this->__table->getTable();
-        if (!$this->isTableExists()){
+        if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
                 $table->id();
-                $table->string('country_code',20)->nullable(false);
+                $table->string('country_code', 20)->nullable(false);
                 $table->string('name')->nullable(false);
             });
 
-            $countries = include_once(__DIR__.'/data/countries.php');
+            $countries = include_once(__DIR__ . '/data/countries.php');
             ModuleRegional::useCountry()->adds($countries);
         }
     }

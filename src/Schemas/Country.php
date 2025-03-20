@@ -1,22 +1,25 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Schemas;
+namespace Hanafalah\ModuleRegional\Schemas;
 
-use Zahzah\LaravelSupport\Contracts\DataManagement;
-use Zahzah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Illuminate\Database\Eloquent\Builder;
 
-class Country extends PackageManagement implements DataManagement{
+class Country extends PackageManagement implements DataManagement
+{
     protected array $__guard   = ['id', 'country_code', 'name'];
     protected array $__add     = ['name'];
     protected string $__entity = 'Country';
 
-    public function country(mixed $conditionals = null): Builder{
+    public function country(mixed $conditionals = null): Builder
+    {
         return $this->getModel()->conditionals($conditionals);
     }
 
-    public function getCountries(){
-        return $this->country(function($q){
+    public function getCountries()
+    {
+        return $this->country(function ($q) {
             if (request()->has('search_name')) {
                 $q->where('name', 'like', '%' . request('search_name') . '%');
             }
@@ -32,7 +35,8 @@ class Country extends PackageManagement implements DataManagement{
      *
      * @return \Illuminate\Database\Eloquent\Model The API access model.
      */
-    public function addOrChange(? array $attributes=[]): self{
+    public function addOrChange(?array $attributes = []): self
+    {
         $this->updateOrCreate($attributes);
         return $this;
     }

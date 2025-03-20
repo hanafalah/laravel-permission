@@ -1,9 +1,7 @@
 <?php
 
-namespace Zahzah\ModuleRegional;
+namespace Hanafalah\ModuleRegional;
 
-use Zahzah\ModuleRegional\Supports\BaseModuleRegional;
+use Hanafalah\ModuleRegional\Supports\BaseModuleRegional;
 
-class ModuleRegional extends BaseModuleRegional{
-    
-}
+class ModuleRegional extends BaseModuleRegional {}

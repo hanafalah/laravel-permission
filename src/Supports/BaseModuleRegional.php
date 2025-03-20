@@ -1,10 +1,11 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Supports;
+namespace Hanafalah\ModuleRegional\Supports;
 
-use Zahzah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
-class BaseModuleRegional extends PackageManagement{
+class BaseModuleRegional extends PackageManagement
+{
     /** @var array */
     protected $__module_regional_config = [];
 
@@ -15,7 +16,8 @@ class BaseModuleRegional extends PackageManagement{
      * @throws Exception description of exception
      * @return void
      */
-    public function __construct(){
-        $this->setConfig('module-regional',$this->__module_regional_config);
-    }    
-}   
+    public function __construct()
+    {
+        $this->setConfig('module-regional', $this->__module_regional_config);
+    }
+}

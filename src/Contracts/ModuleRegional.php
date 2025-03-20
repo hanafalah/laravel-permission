@@ -1,7 +1,5 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Contracts;
+namespace Hanafalah\ModuleRegional\Contracts;
 
-interface ModuleRegional
-{
-}
+interface ModuleRegional {}

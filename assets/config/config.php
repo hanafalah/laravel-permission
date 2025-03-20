@@ -1,7 +1,7 @@
-<?php 
+<?php
 
-use Zahzah\ModuleRegional\Models as ModuleRegionalModels;
-use Zahzah\ModuleRegional\Commands as ModuleRegionalCommands;
+use Hanafalah\ModuleRegional\Models as ModuleRegionalModels;
+use Hanafalah\ModuleRegional\Commands as ModuleRegionalCommands;
 
 return [
     'commands' => [

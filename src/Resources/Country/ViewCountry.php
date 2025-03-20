@@ -1,9 +1,9 @@
 <?php
 
-namespace Zahzah\ModuleRegional\Resources\Country;
+namespace Hanafalah\ModuleRegional\Resources\Country;
 
 use Illuminate\Http\Request;
-use Zahzah\LaravelSupport\Resources\ApiResource;
+use Hanafalah\LaravelSupport\Resources\ApiResource;
 
 class ViewCountry extends ApiResource
 {
@@ -21,7 +21,7 @@ class ViewCountry extends ApiResource
             'country_code'  => $this->country_code,
             'name'          => $this->name
         ];
-        
+
         return $arr;
     }
 }
