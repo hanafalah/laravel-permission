@@ -1,8 +1,9 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Commands;
+namespace Hanafalah\LaravelPermission\Commands;
 
-class InstallMakeCommand extends EnvironmentCommand{
+class InstallMakeCommand extends EnvironmentCommand
+{
     /**
      * The name and signature of the console command.
      *
@@ -23,7 +24,7 @@ class InstallMakeCommand extends EnvironmentCommand{
      */
     public function handle()
     {
-        $provider = 'Zahzah\LaravelPermission\LaravelPermissionServiceProvider';
+        $provider = 'Hanafalah\LaravelPermission\LaravelPermissionServiceProvider';
 
         $this->comment('Installing Laravel Permission...');
         $this->callSilent('vendor:publish', [
@@ -38,10 +39,10 @@ class InstallMakeCommand extends EnvironmentCommand{
         ]);
         $this->info('✔️  Created migrations');
 
-        $migrations = $this->setMigrationBasePath(database_path('migrations'))->canMigrate();        
+        $migrations = $this->setMigrationBasePath(database_path('migrations'))->canMigrate();
         $this->callSilent('migrate', ['--path' => $migrations]);
 
         $this->info('✔️  App table migrated');
-        $this->comment('zahzah/laravel-permission installed successfully.');
+        $this->comment('hanafalah/laravel-permission installed successfully.');
     }
 }

@@ -1,10 +1,8 @@
 <?php
 
-namespace Zahzah\LaravelPermission;
+namespace Hanafalah\LaravelPermission;
 
-use Zahzah\LaravelPermission\Contracts\LaravelPermission as ContractsLaravelPermission;
-use Zahzah\LaravelPermission\Supports\BaseLaravelPermission;
+use Hanafalah\LaravelPermission\Contracts\LaravelPermission as ContractsLaravelPermission;
+use Hanafalah\LaravelPermission\Supports\BaseLaravelPermission;
 
-class LaravelPermission extends BaseLaravelPermission implements ContractsLaravelPermission{
-    
-}
+class LaravelPermission extends BaseLaravelPermission implements ContractsLaravelPermission {}

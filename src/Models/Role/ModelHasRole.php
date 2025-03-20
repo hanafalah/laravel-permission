@@ -1,18 +1,26 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Models\Role;
+namespace Hanafalah\LaravelPermission\Models\Role;
 
-use Zahzah\LaravelHasProps\Concerns\HasCurrent;
-use Zahzah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelHasProps\Concerns\HasCurrent;
+use Hanafalah\LaravelSupport\Models\BaseModel;
 
-class ModelHasRole extends BaseModel{
+class ModelHasRole extends BaseModel
+{
     use HasCurrent;
 
     public $current_conditions = [
-        'model_type','model_id'
+        'model_type',
+        'model_id'
     ];
-    protected $list = ['id','model_type','model_id','current','role_id'];
+    protected $list = ['id', 'model_type', 'model_id', 'current', 'role_id'];
 
-    public function role(){return $this->belongsToModel('Role');}
-    public function model(){return $this->morphTo();}
+    public function role()
+    {
+        return $this->belongsToModel('Role');
+    }
+    public function model()
+    {
+        return $this->morphTo();
+    }
 }

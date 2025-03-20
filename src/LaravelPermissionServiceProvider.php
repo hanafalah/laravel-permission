@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Zahzah\LaravelPermission;
-use Zahzah\LaravelSupport\Providers\BaseServiceProvider;
+namespace Hanafalah\LaravelPermission;
+
+use Hanafalah\LaravelSupport\Providers\BaseServiceProvider;
 
 class LaravelPermissionServiceProvider extends BaseServiceProvider
 {
@@ -15,9 +16,10 @@ class LaravelPermissionServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->registerMainClass(LaravelPermission::class)
-             ->registerCommandService(Providers\CommandServiceProvider::class)
-             ->registers([
-                '*','Services' => function(){
+            ->registerCommandService(Providers\CommandServiceProvider::class)
+            ->registers([
+                '*',
+                'Services' => function () {
                     $this->binds([
                         Contracts\LaravelPermission::class => new LaravelPermission,
                         Contracts\Permission::class => new Schemas\Permission,
@@ -32,7 +34,8 @@ class LaravelPermissionServiceProvider extends BaseServiceProvider
      *
      * @return string
      */
-    protected function dir(): string{
-        return __DIR__.'/';
+    protected function dir(): string
+    {
+        return __DIR__ . '/';
     }
 }

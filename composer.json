@@ -1,8 +1,8 @@
 {
-    "name": "zahzah/laravel-permission",
+    "name": "hanafalah/laravel-permission",
     "autoload": {
         "psr-4": {
-            "Zahzah\\LaravelPermission\\": "src/"
+            "Hanafalah\\LaravelPermission\\": "src/"
         }
     },
     "authors": [
@@ -12,13 +12,13 @@
         }
     ],
     "require": {
-        "zahzah/laravel-has-props": "1.x",
-        "zahzah/laravel-support": "1.x"
+        "hanafalah/laravel-has-props": "1.x",
+        "hanafalah/laravel-support": "1.x"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Zahzah\\LaravelPermission\\LaravelPermissionServiceProvider"
+                "Hanafalah\\LaravelPermission\\LaravelPermissionServiceProvider"
             ]
         }
     },

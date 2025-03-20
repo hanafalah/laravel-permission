@@ -1,9 +1,9 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Providers;
+namespace Hanafalah\LaravelPermission\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zahzah\LaravelPermission\Commands;
+use Hanafalah\LaravelPermission\Commands;
 
 class CommandServiceProvider extends ServiceProvider
 {
@@ -11,11 +11,13 @@ class CommandServiceProvider extends ServiceProvider
         Commands\InstallMakeCommand::class
     ];
 
-    public function register(){
-        $this->commands(config('laravel-permission.commands',$this->__commands));
+    public function register()
+    {
+        $this->commands(config('laravel-permission.commands', $this->__commands));
     }
 
-    public function provides(){
+    public function provides()
+    {
         return $this->__commands;
     }
 }

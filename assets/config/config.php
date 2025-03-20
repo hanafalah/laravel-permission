@@ -1,10 +1,12 @@
-<?php 
+<?php
 
-use Zahzah\LaravelPermission\{
-    Models, Commands, Contracts
+use Hanafalah\LaravelPermission\{
+    Models,
+    Commands,
+    Contracts
 };
 
-return [    
+return [
     'contracts' => [
         'laravel_permission' => Contracts\LaravelPermission::class,
         'permission'         => Contracts\Permission::class,

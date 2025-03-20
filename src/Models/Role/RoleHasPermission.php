@@ -1,13 +1,20 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Models\Role;
+namespace Hanafalah\LaravelPermission\Models\Role;
 
-use Zahzah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelSupport\Models\BaseModel;
 
-class RoleHasPermission extends BaseModel{
-    
-    protected $list = ['id','role_id','permission_id'];
+class RoleHasPermission extends BaseModel
+{
 
-    public function role(){return $this->belongsToModel('Role');}
-    public function permission(){return $this->belongsToModel('Permission');}
+    protected $list = ['id', 'role_id', 'permission_id'];
+
+    public function role()
+    {
+        return $this->belongsToModel('Role');
+    }
+    public function permission()
+    {
+        return $this->belongsToModel('Permission');
+    }
 }

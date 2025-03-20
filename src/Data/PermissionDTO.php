@@ -1,10 +1,11 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Data;
+namespace Hanafalah\LaravelPermission\Data;
 
-use Zahzah\LaravelSupport\Supports\Data;
+use Hanafalah\LaravelSupport\Supports\Data;
 
-class PermissionDTO extends Data{
+class PermissionDTO extends Data
+{
     public function __construct(
         public mixed $id,
         public string $name,
@@ -14,5 +15,5 @@ class PermissionDTO extends Data{
         public ?string $guard_name = 'api',
         public ?bool $visitibility = true,
         public ?string $root = null,
-    ){}
+    ) {}
 }

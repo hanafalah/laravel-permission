@@ -3,9 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Zahzah\LaravelSupport\Concerns\NowYouSeeMe;
-use Zahzah\LaravelPermission\Models\Permission\ModelHasPermission;
-use Zahzah\LaravelPermission\Models\Permission\Permission;
+use Hanafalah\LaravelSupport\Concerns\NowYouSeeMe;
+use Hanafalah\LaravelPermission\Models\Permission\ModelHasPermission;
+use Hanafalah\LaravelPermission\Models\Permission\Permission;
 
 return new class extends Migration
 {
@@ -13,7 +13,8 @@ return new class extends Migration
 
     private $__table;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->__table = app(config('database.models.ModelHasPermission', ModelHasPermission::class));
     }
 
@@ -23,22 +24,22 @@ return new class extends Migration
     public function up(): void
     {
         $table_name = $this->__table->getTableName();
-        if (!$this->isTableExists()){
+        if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
                 $permission = app(config('database.models.Permission', Permission::class));
 
                 $table->id();
                 $table->foreignIdFor($permission::class)
-                      ->nullable(false)
-                      ->index()->constrained()->cascadeOnDelete()
-                      ->cascadeOnUpdate();
+                    ->nullable(false)
+                    ->index()->constrained()->cascadeOnDelete()
+                    ->cascadeOnUpdate();
 
-                $table->string('model_type',50)->nullable(false);
-                $table->string('model_id',36)->nullable(false);
+                $table->string('model_type', 50)->nullable(false);
+                $table->string('model_id', 36)->nullable(false);
                 $table->timestamps();
 
-                $table->index(['model_type','model_id'],'model_perm');
-                $table->index(['model_type','model_id',$permission->getForeignKey()],'model_with_perm');
+                $table->index(['model_type', 'model_id'], 'model_perm');
+                $table->index(['model_type', 'model_id', $permission->getForeignKey()], 'model_with_perm');
             });
         }
     }

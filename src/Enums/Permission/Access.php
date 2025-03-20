@@ -1,8 +1,9 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Enums\Permission;
+namespace Hanafalah\LaravelPermission\Enums\Permission;
 
-enum Access: int{
+enum Access: int
+{
     case DENY    = 0;
     case ALLOW   = 1;
 }

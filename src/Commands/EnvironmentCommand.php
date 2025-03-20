@@ -1,8 +1,8 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Commands;
+namespace Hanafalah\LaravelPermission\Commands;
 
-use Zahzah\LaravelSupport\{
+use Hanafalah\LaravelSupport\{
     Commands\BaseCommand,
     Concerns\ServiceProvider\HasMigrationConfiguration,
     Concerns\Support\HasMicrotenant
@@ -11,15 +11,17 @@ use Zahzah\LaravelSupport\{
 class EnvironmentCommand extends BaseCommand
 {
     use HasMigrationConfiguration;
-    use HasMicrotenant; 
+    use HasMicrotenant;
 
-    protected function init(): self{
+    protected function init(): self
+    {
         //INITIALIZE SECTION
         $this->initConfig()->setLocalConfig('laravel-permission');
         return $this;
     }
 
-    protected function dir(): string{
-        return __DIR__.'/../';
+    protected function dir(): string
+    {
+        return __DIR__ . '/../';
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Contracts;
+namespace Hanafalah\LaravelPermission\Contracts;
 
-interface LaravelPermission{
-    
-}
+interface LaravelPermission {}

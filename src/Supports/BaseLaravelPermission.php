@@ -1,10 +1,11 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Supports;
+namespace Hanafalah\LaravelPermission\Supports;
 
-use Zahzah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
-class BaseLaravelPermission extends PackageManagement{
+class BaseLaravelPermission extends PackageManagement
+{
     /** @var array */
     protected $__laravel_permission_config = [];
 
@@ -15,7 +16,8 @@ class BaseLaravelPermission extends PackageManagement{
      * @throws Exception description of exception
      * @return void
      */
-    public function __construct(){
-        $this->setConfig('laravel-permission',$this->__laravel_permission_config);
-    }    
-}   
+    public function __construct()
+    {
+        $this->setConfig('laravel-permission', $this->__laravel_permission_config);
+    }
+}

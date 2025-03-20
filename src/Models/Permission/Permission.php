@@ -1,17 +1,17 @@
 <?php
 
-namespace Zahzah\LaravelPermission\Models\Permission;
+namespace Hanafalah\LaravelPermission\Models\Permission;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Zahzah\LaravelSupport\Models\BaseModel;
-use Zahzah\LaravelPermission\Enums\{
+use Hanafalah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelPermission\Enums\{
     Permission\Type
 };
 
 use Illuminate\Support\Str;
-use Zahzah\LaravelHasProps\Concerns\HasProps;
-use Zahzah\LaravelPermission\Resources\Permission\ViewPermission;
+use Hanafalah\LaravelHasProps\Concerns\HasProps;
+use Hanafalah\LaravelPermission\Resources\Permission\ViewPermission;
 
 class Permission extends BaseModel
 {
@@ -19,8 +19,14 @@ class Permission extends BaseModel
 
     public $timestamps = false;
     protected $fillable = [
-        'id','parent_id','name','alias','root',
-        'type','guard_name','visibility'
+        'id',
+        'parent_id',
+        'name',
+        'alias',
+        'root',
+        'type',
+        'guard_name',
+        'visibility'
     ];
 
     protected static function booted(): void
@@ -57,7 +63,8 @@ class Permission extends BaseModel
         return new ViewPermission($this);
     }
 
-    protected static function rootGenerator($query, mixed $dirties = null){
+    protected static function rootGenerator($query, mixed $dirties = null)
+    {
         $dirties ??= $query->getDirtyRoot();
         if (static::isHasRoot($query) && static::needRooting()) {
             if (($query->wasRecentlyCreated && !isset($query->root)) || $query->isDirty($dirties)) {
@@ -81,18 +88,20 @@ class Permission extends BaseModel
         }
     }
 
-    public function scopeAlias($builder, mixed $alias, string $alias_name = 'alias'){
-        return $builder->where(function($query) use ($alias,$alias_name){
+    public function scopeAlias($builder, mixed $alias, string $alias_name = 'alias')
+    {
+        return $builder->where(function ($query) use ($alias, $alias_name) {
             $aliases = $this->mustArray($alias);
             foreach ($aliases as $alias) $query->orWhere($alias_name, $alias);
         });
     }
 
-    public function scopeAliases($builder, mixed $alias, string $alias_name = 'alias'){
+    public function scopeAliases($builder, mixed $alias, string $alias_name = 'alias')
+    {
         $builder->where(function ($query) use ($alias, $alias_name) {
             $aliases = $this->mustArray($alias);
             foreach ($aliases as $alias) {
-                $query->orWhere(function($query) use ($alias_name,$alias){
+                $query->orWhere(function ($query) use ($alias_name, $alias) {
                     $query->where($alias_name, $alias)
                         ->orWhereLike($alias_name, $alias . '%');
                 });
@@ -100,47 +109,55 @@ class Permission extends BaseModel
         });
     }
 
-    public function scopeAsModule($builder){
+    public function scopeAsModule($builder)
+    {
         return $builder->where("type", Type::MODULE->value);
     }
 
-    public function scopeAsPermission($builder){
+    public function scopeAsPermission($builder)
+    {
         return $builder->where("type", Type::PERMISSION->value);
     }
-    public function scopeAsMenu($builder){
+    public function scopeAsMenu($builder)
+    {
         return $builder->where("type", Type::MENU->value);
     }
-    public function scopeShowInAcl($builder){
+    public function scopeShowInAcl($builder)
+    {
         return $builder->where("props->show_in_acl", true);
     }
 
-    public function scopeCheckAccess($builder,$model_id,$model_type = 'Role'){
+    public function scopeCheckAccess($builder, $model_id, $model_type = 'Role')
+    {
         $builder->select('*');
-        if ($model_type == 'Role'){
+        if ($model_type == 'Role') {
             $model = $this->RoleHasPermissionModel();
             $key   = "role_id = ?";
             $bindings = [$model_id];
-        }else{
+        } else {
             $model = $this->ModelHasPermissionModel();
             $key   = "CAST(model_id AS CHAR) = '?' AND model_type = '?'";
-            $bindings = [$model_id,$model_type];
+            $bindings = [$model_id, $model_type];
         }
         $table_name = $model->getTableName();
-        $builder->selectRaw("permissions.*,CASE WHEN EXISTS (SELECT permission_id FROM $table_name WHERE $key AND permission_id = permissions.id) THEN 1 ELSE 0 END as access",$bindings);
+        $builder->selectRaw("permissions.*,CASE WHEN EXISTS (SELECT permission_id FROM $table_name WHERE $key AND permission_id = permissions.id) THEN 1 ELSE 0 END as access", $bindings);
         return $builder;
     }
 
     //EIGER SECTION
-    public function modelHasPermission(){
+    public function modelHasPermission()
+    {
         return $this->hasOneModel('ModelHasPermission');
     }
 
-    public function roleHasPermission(){
+    public function roleHasPermission()
+    {
         return $this->hasOneModel('RoleHasPermission');
     }
 
-    public function recursiveChilds(){
-        return $this->hasManyModel('Permission','parent_id')->when(isset(request()->role_id),function($query){
+    public function recursiveChilds()
+    {
+        return $this->hasManyModel('Permission', 'parent_id')->when(isset(request()->role_id), function ($query) {
             $query->checkAccess(request()->role_id);
         })->with('recursiveChilds');
     }

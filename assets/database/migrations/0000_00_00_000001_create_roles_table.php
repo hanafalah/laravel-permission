@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Zahzah\LaravelSupport\Concerns\NowYouSeeMe;
-use Zahzah\LaravelPermission\Models\Role\Role;
+use Hanafalah\LaravelSupport\Concerns\NowYouSeeMe;
+use Hanafalah\LaravelPermission\Models\Role\Role;
 
 return new class extends Migration
 {
@@ -12,7 +12,8 @@ return new class extends Migration
 
     private $__table;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->__table = app(config('database.models.Role', Role::class));
     }
 
@@ -22,20 +23,20 @@ return new class extends Migration
     public function up(): void
     {
         $table_name = $this->__table->getTableName();
-        if (!$this->isTableExists()){
+        if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
                 $table->id();
-                $table->string('name',100)->nullable(false);
+                $table->string('name', 100)->nullable(false);
                 $table->json('props')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             });
 
-            Schema::table($table_name, function (Blueprint $table) use ($table_name){
-                $table->foreignIdFor($this->__table,'parent_id')
-                      ->nullable()->after('id')
-                      ->index()->constrained($table_name)
-                      ->cascadeOnUpdate()->restrictOnDelete();
+            Schema::table($table_name, function (Blueprint $table) use ($table_name) {
+                $table->foreignIdFor($this->__table, 'parent_id')
+                    ->nullable()->after('id')
+                    ->index()->constrained($table_name)
+                    ->cascadeOnUpdate()->restrictOnDelete();
             });
         }
     }
