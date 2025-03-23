@@ -7,10 +7,16 @@ use Hanafalah\LaravelPermission\{
 };
 
 return [
-    'contracts' => [
-        'laravel_permission' => Contracts\LaravelPermission::class,
-        'permission'         => Contracts\Permission::class,
-        'role'               => Contracts\Role::class
+    'app' => [
+        'contracts' => [
+            'laravel_permission' => Contracts\LaravelPermission::class,
+            'permission'         => Contracts\Permission::class,
+            'role'               => Contracts\Role::class
+        ]
+    ],
+    'libs' => [
+        'model' => 'Models',
+        'contract' => 'Contracts'
     ],
     'database' => [
         'models' => [
