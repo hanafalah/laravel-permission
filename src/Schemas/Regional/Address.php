@@ -1,6 +1,6 @@
 <?php
 
-namespace Hanafalah\ModuleRegional\Schemas;
+namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
@@ -56,7 +56,10 @@ class Address extends PackageManagement implements RegionalAddress{
             $model = $this->{$model.'Model'}()->findOrFail($id);
             $address->sync($model,['id','name']);
         }else{
-            $address->{'prop_'.$type} = null;
+            $address->{'prop_'.$type} = [
+                'id'   => null,
+                'name' => null
+            ];
             $address->save();
         }
         return $this;

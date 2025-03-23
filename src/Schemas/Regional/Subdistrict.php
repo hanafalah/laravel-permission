@@ -1,6 +1,6 @@
 <?php
 
-namespace Hanafalah\ModuleRegional\Schemas;
+namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
