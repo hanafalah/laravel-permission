@@ -7,16 +7,13 @@ return [
     'commands' => [
         ModuleRegionalCommands\InstallMakeCommand::class
     ],
+    'libs' => [
+        'model' => 'Models',
+        'contract' => 'Contracts'
+    ],
     'database' => [
         'models' => [
-            'ModelHasCoordinate' => ModuleRegionalModels\Maps\ModelHasCoordinate::class,
-            'Address'            => ModuleRegionalModels\Regional\Address::class,
-            'District'           => ModuleRegionalModels\Regional\District::class,
-            'Location'           => ModuleRegionalModels\Regional\Location::class,
-            'Province'           => ModuleRegionalModels\Regional\Province::class,
-            'Subdistrict'        => ModuleRegionalModels\Regional\Subdistrict::class,
-            'Village'            => ModuleRegionalModels\Regional\Village::class,
-            'Country'            => ModuleRegionalModels\Citizenship\Country::class
+            //ADD YOUR MODEL HERE
         ]
     ]
 ];

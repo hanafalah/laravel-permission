@@ -2,34 +2,31 @@
 
 namespace Hanafalah\ModuleRegional\Schemas;
 
-use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\ModuleRegional\Contracts\Regional\Province as RegionalProvince;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class Province extends PackageManagement implements DataManagement
+class Province extends PackageManagement implements RegionalProvince
 {
-    public function booting(): self
-    {
-        static::$__class = $this;
-        static::$__model = $this->{$this->__entity . "Model"}();
-        return $this;
-    }
-
     protected array $__guard   = ['id', 'code', 'name'];
     protected array $__add     = ['code', 'name', 'latitude', 'longitude'];
     protected string $__entity = 'Province';
+    public static $province_model;
 
-    /**
-     * Add a new API access or update the existing one if found.
-     *
-     * The given attributes will be merged with the existing API access.
-     *
-     * @param array $attributes The attributes to be added to the API access.
-     *
-     * @return \Illuminate\Database\Eloquent\Model The API access model.
-     */
-    public function addOrChange(?array $attributes = []): self
-    {
-        $this->updateOrCreate($attributes);
-        return $this;
+    public function province(mixed $conditionals = null): Builder{
+        $this->booting();
+        return $this->ProvinceModel()->conditionals($this->mergeCondition($conditionals ?? []));
+    }
+
+    public function prepareViewProvincePaginate(PaginateData $paginate_dto): LengthAwarePaginator{
+        return static::$province_model = $this->province()->paginate(...$paginate_dto->toArray())->appends(request()->all());
+    }
+
+    public function viewProvincePaginate(?PaginateData $paginate_dto = null){
+        return $this->transforming($this->usingEntity()->getViewResource(),function() use ($paginate_dto){
+            return $this->prepareViewProvincePaginate($paginate_dto ?? PaginateData::from(request()->all()));
+        });
     }
 }

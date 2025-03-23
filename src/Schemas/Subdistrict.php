@@ -2,34 +2,31 @@
 
 namespace Hanafalah\ModuleRegional\Schemas;
 
-use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\ModuleRegional\Contracts\Regional\Subdistrict as RegionalSubdistrict;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class District extends PackageManagement implements DataManagement
+class Subdistrict extends PackageManagement implements RegionalSubdistrict
 {
-    public function booting(): self
-    {
-        static::$__class = $this;
-        static::$__model = $this->{$this->__entity . "Model"}();
-        return $this;
-    }
-
     protected array $__guard   = ['id', 'district_id', 'province_id', 'code', 'name'];
     protected array $__add     = ['district_id', 'province_id', 'code', 'name'];
     protected string $__entity = 'District';
+    public static $subdistrict_model;
 
-    /**
-     * Add a new API access or update the existing one if found.
-     *
-     * The given attributes will be merged with the existing API access.
-     *
-     * @param array $attributes The attributes to be added to the API access.
-     *
-     * @return \Illuminate\Database\Eloquent\Model The API access model.
-     */
-    public function addOrChange(?array $attributes = []): self
-    {
-        $this->updateOrCreate($attributes);
-        return $this;
+    public function subdistrict(mixed $conditionals = null): Builder{
+        $this->booting();
+        return $this->SubdistrictModel()->conditionals($this->mergeCondition($conditionals ?? []));
+    }
+
+    public function prepareViewSubdistrictPaginate(PaginateData $paginate_dto): LengthAwarePaginator{
+        return static::$subdistrict_model = $this->subdistrict()->paginate(...$paginate_dto->toArray())->appends(request()->all());
+    }
+
+    public function viewSubdistrictPaginate(?PaginateData $paginate_dto = null){
+        return $this->transforming($this->usingEntity()->getViewResource(),function() use ($paginate_dto){
+            return $this->prepareViewSubdistrictPaginate($paginate_dto ?? PaginateData::from(request()->all()));
+        });
     }
 }
