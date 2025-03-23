@@ -26,7 +26,7 @@ class ModuleRegionalServiceProvider extends BaseServiceProvider
                 },
                 'Services' => function () {
                     $this->binds([
-                        Contracts\ModuleRegional::class => new ModuleRegional
+                        Contracts\ModuleRegional::class => ModuleRegional::class
                     ]);
                 }
             ]);
