@@ -27,30 +27,17 @@ class Role extends BaseModel
         });
     }
 
-    public function toViewApi()
+    public function getViewResource()
     {
-        return new ViewRole($this);
+        return ViewRole::class;
     }
 
-    public function toShowApi()
-    {
-        return new ShowRole($this);
+    public function getShowResource(){
+        return ShowRole::class;
     }
 
-    public function modelHasRole()
-    {
-        return $this->hasOneModel('ModelHasRole');
-    }
-    public function modelHasRoles()
-    {
-        return $this->hasManyModel('ModelHasRole');
-    }
-    public function roleHasPermission()
-    {
-        return $this->hasOneModel('RoleHasPermission');
-    }
-    public function roleHasPermissions()
-    {
-        return $this->hasManyModel('RoleHasPermission');
-    }
+    public function modelHasRole(){return $this->hasOneModel('ModelHasRole');}
+    public function modelHasRoles(){return $this->hasManyModel('ModelHasRole');}
+    public function roleHasPermission(){return $this->hasOneModel('RoleHasPermission');}
+    public function roleHasPermissions(){return $this->hasManyModel('RoleHasPermission');}
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelPermission\Contracts\Permission as ContractsPermission;
-use Hanafalah\LaravelPermission\Resources\Permission\ViewPermission;
+use Hanafalah\LaravelPermission\Data\PermissionData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
 class Permission extends PackageManagement implements ContractsPermission
@@ -16,13 +16,7 @@ class Permission extends PackageManagement implements ContractsPermission
     protected string $__entity = 'Permission';
     public static $permission_model;
 
-    protected array $__resources = [
-        'view' => ViewPermission::class,
-        'show' => ViewPermission::class
-    ];
-
-    public function prepareStorePermission(?array $attributes = null): Model
-    {
+    public function prepareStorePermission(?array $attributes = null): Model{
         $attributes ??= request()->all();
         foreach ($attributes as $attribute) {
             $permission = $this->addPermission($attribute);
@@ -80,45 +74,41 @@ class Permission extends PackageManagement implements ContractsPermission
         return static::$permission_model = $model;
     }
 
-    public function showPermission(?Model $model = null): array
-    {
-        return $this->transforming($this->__resources['view'], function () use ($model) {
+    public function showPermission(?Model $model = null): array{
+        return $this->showEntityResource(function() use ($model){
             return $this->prepareShowPermission($model);
         });
     }
 
-    private function addPermission(array $attributes)
-    {
+    private function addPermission(PermissionData $permission_dto){
         $permission = $this->PermissionModel()->firstOrCreate([
-            'parent_id' => $attributes['parent_id'] ?? null,
-            'alias'     => $attributes['alias']
+            'parent_id' => $permission_dto->parent_id ?? null,
+            'alias'     => $permission_dto->alias
         ], [
-            'name'      => $attributes['name'],
-            'type'      => $attributes['type']
+            'name'      => $permission_dto->name,
+            'type'      => $permission_dto->type
         ]);
-        if (isset($attributes['props'])) {
-            foreach ($attributes['props'] as $key => $prop) {
+        if (isset($permission_dto->props)) {
+            foreach ($permission_dto->props as $key => $prop) {
                 $permission->{$key} = $prop;
             }
             $permission->save();
         }
-        if (isset($attributes['childs']) && count($attributes['childs']) > 0) {
-            foreach ($attributes['childs'] as $child) {
-                $child['parent_id'] = $permission->getKey();
+        if (isset($permission_dto->childs) && count($permission_dto->childs) > 0) {
+            foreach ($permission_dto->childs as $child) {
+                $child->parent_id = $permission->getKey();
                 $this->addPermission($child);
             }
         }
         return $permission;
     }
 
-    public function permission(mixed $conditionals = null): Builder
-    {
+    public function permission(mixed $conditionals = null): Builder{
         $this->booting();
-        return $this->PermissionModel()->conditionals($conditionals)->orderBy('name', 'asc');
+        return $this->PermissionModel()->conditionals($this->mergeCOndition($conditionals ?? []))->withParameters()->orderBy('name', 'asc');
     }
 
-    public function addOrChange(?array $attributes = []): self
-    {
+    public function addOrChange(?array $attributes = []): self{
         $this->updateOrCreate($attributes);
         return $this;
     }

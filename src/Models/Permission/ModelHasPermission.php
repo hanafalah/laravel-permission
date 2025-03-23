@@ -15,12 +15,6 @@ class ModelHasPermission extends BaseModel
         'model_type'
     ];
 
-    public function permission()
-    {
-        return $this->belongsToModel('Permission');
-    }
-    public function model()
-    {
-        return $this->morphTo('model');
-    }
+    public function permission(){return $this->belongsToModel('Permission');}
+    public function model(){return $this->morphTo('model');}
 }
