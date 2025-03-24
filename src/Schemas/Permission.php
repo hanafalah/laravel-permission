@@ -16,6 +16,18 @@ class Permission extends PackageManagement implements ContractsPermission
     protected string $__entity = 'Permission';
     public static $permission_model;
 
+    public function getPermissionModel(): mixed{
+        return static::$permission_model;
+    }
+
+    public function showUsingRelation(): array{
+        return [];
+    }
+
+    public function getPermission(): mixed{
+        return static::$permission_model;
+    }
+
     public function prepareStorePermission(?array $attributes = null): Model{
         $attributes ??= request()->all();
         foreach ($attributes as $attribute) {
@@ -24,8 +36,7 @@ class Permission extends PackageManagement implements ContractsPermission
         return $permission;
     }
 
-    public function prepareViewPermissionList(?array $attributes = null): Collection
-    {
+    public function prepareViewPermissionList(?array $attributes = null): Collection{
         $attributes ??= request()->all();
 
         $permission = $this->permission()->when(isset(request()->role_id), function ($query) {
@@ -35,25 +46,13 @@ class Permission extends PackageManagement implements ContractsPermission
         return static::$permission_model = $permission;
     }
 
-    public function viewPermissionList(): array
-    {
-        return $this->transforming($this->__resources['view'], function () {
+    public function viewPermissionList(): array{
+        return $this->viewEntityResource(function(){
             return $this->prepareViewPermissionList();
         });
     }
 
-    public function getPermissionModel(): mixed
-    {
-        return static::$permission_model;
-    }
-
-    public function showUsingRelation(): array
-    {
-        return [];
-    }
-
-    public function prepareShowPermission(?Model $model = null, ?array $attributes = null): Model
-    {
+    public function prepareShowPermission(?Model $model = null, ?array $attributes = null): Model{
         $attributes ??= request()->all();
 
         if (isset($model) && $model instanceof Collection) {
@@ -106,10 +105,5 @@ class Permission extends PackageManagement implements ContractsPermission
     public function permission(mixed $conditionals = null): Builder{
         $this->booting();
         return $this->PermissionModel()->conditionals($this->mergeCOndition($conditionals ?? []))->withParameters()->orderBy('name', 'asc');
-    }
-
-    public function addOrChange(?array $attributes = []): self{
-        $this->updateOrCreate($attributes);
-        return $this;
     }
 }
