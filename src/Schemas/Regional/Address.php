@@ -42,6 +42,11 @@ class Address extends PackageManagement implements RegionalAddress{
             'village_id'     => $address_dto->village_id
         ]);
 
+        $address->zip_code = $address_dto->props->zip_code;
+        $address->rt       = $address_dto->props->rt;
+        $address->rw       = $address_dto->props->rw;
+        $address->save();
+
         $this->setRegional($address, $address_dto->province_id, 'province')
              ->setRegional($address, $address_dto->district_id, 'district')
              ->setRegional($address, $address_dto->subdistrict_id, 'subdistrict')
@@ -67,8 +72,7 @@ class Address extends PackageManagement implements RegionalAddress{
 
     public function storeAddress(?AddressData $address_dto = null): array{
         return $this->transaction(function() use ($address_dto){
-            $address_dto ??= AddressData::from(request()->all());
-            return $this->showAddress($this->prepareStoreAddress($address_dto));
+            return $this->showAddress($this->prepareStoreAddress($address_dto ?? $this->requestDTO(AddressData::class)));
         });
     }
 

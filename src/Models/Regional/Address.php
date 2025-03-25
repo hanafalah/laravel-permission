@@ -17,7 +17,8 @@ class Address extends BaseModel
 
   protected $list = [
     'id', 'name', 'model_type', 'model_id', 'flag', 
-    'province_id', 'district_id', 'subdistrict_id', 'village_id', 'props'
+    'province_id', 'district_id', 'subdistrict_id', 'village_id', 
+    'props'
   ];
   protected $show = [
     'props'
@@ -28,7 +29,8 @@ class Address extends BaseModel
     'province_name'    => 'string',
     'district_name'    => 'string',
     'subdistrict_name' => 'string',
-    'village_name'     => 'string'
+    'village_name'     => 'string',
+    'zip_code'         => 'string'
   ];
 
   public function getPropsQuery(): array
@@ -37,7 +39,8 @@ class Address extends BaseModel
       'province_name'    => 'props->prop_province->name',
       'district_name'    => 'props->prop_district->name',
       'subdistrict_name' => 'props->prop_subdistrict->name',
-      'village_name'     => 'props->prop_village->name'
+      'village_name'     => 'props->prop_village->name',
+      'zip_code'         => 'props->zip_code'
     ];
   }
 
