@@ -54,7 +54,7 @@ class Address extends BaseModel
 
   public function getAddressFlag(){
     switch ($this->flag) {
-      case Flag::ID_CARD->value   : return 'ktp_address';break;
+      case Flag::KTP->value       : return 'ktp_address';break;
       case Flag::RESIDENCE->value : return 'residence_address';break;
       case Flag::OTHER->value     : return 'other';break;
     }
