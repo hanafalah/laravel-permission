@@ -5,11 +5,15 @@ namespace Hanafalah\LaravelPermission\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Hanafalah\LaravelPermission\Contracts\Permission as ContractsPermission;
+use Hanafalah\LaravelPermission\Contracts\{
+    Permission as ContractsPermission,
+    Menu
+};
 use Hanafalah\LaravelPermission\Data\PermissionData;
+use Hanafalah\LaravelPermission\Enums\Permission\Type;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
-class Permission extends PackageManagement implements ContractsPermission
+class Permission extends PackageManagement implements ContractsPermission,Menu
 {
     protected array $__guard   = ['id', 'parent_id', 'alias'];
     protected array $__add     = ['name', 'slug', 'root', 'type', 'guard_name', 'visibility'];
@@ -39,9 +43,7 @@ class Permission extends PackageManagement implements ContractsPermission
     public function prepareViewPermissionList(?array $attributes = null): Collection{
         $attributes ??= request()->all();
 
-        $permission = $this->permission()->when(isset(request()->role_id), function ($query) {
-            $query->checkAccess(request()->role_id);
-        })->whereNull('parent_id')->with('recursiveChilds')->get();
+        $permission = $this->permission()->whereNull('parent_id')->with('recursiveChilds')->get();
 
         return static::$permission_model = $permission;
     }
@@ -49,6 +51,21 @@ class Permission extends PackageManagement implements ContractsPermission
     public function viewPermissionList(): array{
         return $this->viewEntityResource(function(){
             return $this->prepareViewPermissionList();
+        });
+    }
+
+    public function prepareViewMenuList(?array $attributes = null): Collection{
+        $attributes ??= request()->all();
+        
+        $permission = $this->permission()->whereNull('parent_id')->with('recursiveMenus')
+                           ->asMenu()->get();
+
+        return static::$permission_model = $permission;
+    }
+
+    public function viewMenuList(): array{
+        return $this->transforming($this->usingEntity()->getViewMenuResource(),function(){
+            return $this->prepareViewMenuList();
         });
     }
 
@@ -104,6 +121,10 @@ class Permission extends PackageManagement implements ContractsPermission
 
     public function permission(mixed $conditionals = null): Builder{
         $this->booting();
-        return $this->PermissionModel()->conditionals($this->mergeCOndition($conditionals ?? []))->withParameters()->orderBy('name', 'asc');
+        return $this->PermissionModel()->conditionals($this->mergeCOndition($conditionals ?? []))
+                    ->when(isset(request()->role_id), function ($query) {
+                        $query->checkAccess(request()->role_id);
+                    })
+                    ->withParameters()->orderBy('name', 'asc');
     }
 }

@@ -11,6 +11,7 @@ use Hanafalah\LaravelPermission\Enums\{
 
 use Illuminate\Support\Str;
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
+use Hanafalah\LaravelPermission\Resources\Permission\ViewMenu;
 use Hanafalah\LaravelPermission\Resources\Permission\ViewPermission;
 
 class Permission extends BaseModel
@@ -59,6 +60,10 @@ class Permission extends BaseModel
 
     public function getShowResource(){
         return ViewPermission::class;
+    }
+
+    public function getViewMenuResource(){
+        return ViewMenu::class;
     }
 
     protected static function rootGenerator($query, mixed $dirties = null)
@@ -116,12 +121,13 @@ class Permission extends BaseModel
     {
         return $builder->where("type", Type::PERMISSION->value);
     }
+
     public function scopeAsMenu($builder)
     {
         return $builder->where("type", Type::MENU->value);
     }
-    public function scopeShowInAcl($builder)
-    {
+
+    public function scopeShowInAcl($builder){
         return $builder->where("props->show_in_acl", true);
     }
 
@@ -143,20 +149,19 @@ class Permission extends BaseModel
     }
 
     //EIGER SECTION
-    public function modelHasPermission()
-    {
-        return $this->hasOneModel('ModelHasPermission');
-    }
-
-    public function roleHasPermission()
-    {
-        return $this->hasOneModel('RoleHasPermission');
-    }
-
-    public function recursiveChilds()
-    {
+    public function modelHasPermission(){return $this->hasOneModel('ModelHasPermission');}
+    public function roleHasPermission(){return $this->hasOneModel('RoleHasPermission');}
+    public function recursiveChilds(){
         return $this->hasManyModel('Permission', 'parent_id')->when(isset(request()->role_id), function ($query) {
             $query->checkAccess(request()->role_id);
         })->with('recursiveChilds');
+    }
+
+    public function recursiveMenus(){
+        return $this->hasManyModel('Permission', 'parent_id')
+        ->where('type',Type::MENU->value)
+        ->when(isset(request()->role_id), function ($query) {
+            $query->checkAccess(request()->role_id);
+        })->with('recursiveMenus');
     }
 }
