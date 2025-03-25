@@ -3,29 +3,24 @@
 namespace Hanafalah\ModuleRegional\Resources\Address;
 
 use Illuminate\Http\Request;
-use Hanafalah\LaravelSupport\Resources\ApiResource;
 
-class ShowAddress extends ApiResource
+class ShowAddress extends ViewAddress
 {
-
-    /**
-     * Transform the resource into an array.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function toArray(Request $request): array
-    {
+    public function toArray(Request $request): array{
         $arr = [
-            'id'                => $this->id,
-            'name'              => $this->name,
-            'zip_code'          => $this->zip_code,
-            'province_name'     => $this->prop_province->name ?? null,
-            'district_name'     => $this->prop_district->name ?? null,
-            'subdistrict_name'  => $this->prop_subdistrict->name ?? null,
-            'village_name'      => $this->prop_village->name ?? null
+            'province'    => $this->relationValidation('province',function(){
+                return $this->province->toViewApi();
+            }),
+            'district'    => $this->relationValidation('district',function(){
+                return $this->district->toViewApi();
+            }),
+            'subdistrict' => $this->relationValidation('subdistrict',function(){
+                return $this->subdistrict->toViewApi();
+            }),
+            'village'     => $this->relationValidation('village',function(){
+                return $this->village->toViewApi();
+            }),
         ];
-
-        return $arr;
+        return $this->mergeArray(parent::toArray($request),$arr);
     }
 }
