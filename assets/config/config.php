@@ -7,18 +7,19 @@ use Hanafalah\LaravelPermission\{
 };
 
 return [
-    'contracts' => [
-        'laravel_permission' => Contracts\LaravelPermission::class,
-        'permission'         => Contracts\Permission::class,
-        'role'               => Contracts\Role::class
+    'app' => [
+        'contracts' => [
+            //ADD YOUR CONTRACTS HERE
+        ]
+    ],
+    'libs' => [
+        'model' => 'Models',
+        'contract' => 'Contracts',
+        'schema' => 'Schemas'
     ],
     'database' => [
         'models' => [
-            'Role'               => Models\Role\Role::class,
-            'Permission'         => Models\Permission\Permission::class,
-            'ModelHasRole'       => Models\Role\ModelHasRole::class,
-            'ModelHasPermission' => Models\Permission\ModelHasPermission::class,
-            'RoleHasPermission'  => Models\Role\RoleHasPermission::class,
+            //ADD YOUR MODELS HERE
         ]
     ],
     'commands' => [

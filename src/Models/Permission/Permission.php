@@ -53,14 +53,12 @@ class Permission extends BaseModel
         });
     }
 
-    public function toViewApi()
-    {
-        return new ViewPermission($this);
+    public function getViewResource(){
+        return ViewPermission::class;
     }
 
-    public function toShowApi()
-    {
-        return new ViewPermission($this);
+    public function getShowResource(){
+        return ViewPermission::class;
     }
 
     protected static function rootGenerator($query, mixed $dirties = null)
