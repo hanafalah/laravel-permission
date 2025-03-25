@@ -10,7 +10,6 @@ use Hanafalah\LaravelPermission\Contracts\{
     Menu
 };
 use Hanafalah\LaravelPermission\Data\PermissionData;
-use Hanafalah\LaravelPermission\Enums\Permission\Type;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
 class Permission extends PackageManagement implements ContractsPermission,Menu

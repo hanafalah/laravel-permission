@@ -83,7 +83,7 @@ class Role extends PackageManagement implements ContractsRole
     public function storeRole(?RoleData $role_dto = null): array{
         return $this->transaction(function () use ($role_dto) {
             $attributes ??= request()->all();
-            return $this->showRole($this->prepareStoreRole($role_dto ?? RoleData::from(request()->all())));
+            return $this->showRole($this->prepareStoreRole($role_dto ?? $this->requestDTO(RoleData::class)));
         });
     }
 
