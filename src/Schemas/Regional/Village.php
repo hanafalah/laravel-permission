@@ -2,7 +2,7 @@
 
 namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
-use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Illuminate\Database\Eloquent\Builder;

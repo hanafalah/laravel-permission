@@ -1,8 +1,8 @@
 <?php
 
-namespace Hanafalah\ModuleRegional\Contracts\Regional;
+namespace Hanafalah\ModuleRegional\Contracts\Schemas\Regional;
 
-use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\ModuleRegional\Data\AddressData;
 use Illuminate\Database\Eloquent\Builder;

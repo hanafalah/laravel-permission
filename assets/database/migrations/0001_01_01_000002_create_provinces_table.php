@@ -36,7 +36,10 @@ return new class extends Migration
             });
 
             $provinces = include(__DIR__ . '/data/provinces.php');
-            ModuleRegional::useProvince()->adds($provinces);
+            $province_model = app(config('database.models.Province'));
+            foreach ($provinces as $province) {
+                $province_model->updateOrCreate($province);
+            }
         }
     }
 

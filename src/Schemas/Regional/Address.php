@@ -42,9 +42,9 @@ class Address extends PackageManagement implements RegionalAddress{
             'village_id'     => $address_dto->village_id
         ]);
 
-        $address->zip_code = $address_dto->props->zip_code;
-        $address->rt       = $address_dto->props->rt;
-        $address->rw       = $address_dto->props->rw;
+        if (isset($address_dto->props)){
+            foreach ($address_dto->props as $key => $value) $address->{$key} = $value ?? null;
+        }
         $address->save();
 
         $this->setRegional($address, $address_dto->province_id, 'province')
