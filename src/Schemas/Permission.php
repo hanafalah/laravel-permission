@@ -5,7 +5,7 @@ namespace Hanafalah\LaravelPermission\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Hanafalah\LaravelPermission\Contracts\{
+use Hanafalah\LaravelPermission\Contracts\Schemas\{
     Permission as ContractsPermission,
     Menu
 };
