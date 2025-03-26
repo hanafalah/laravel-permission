@@ -8,13 +8,12 @@ trait HasAddress
 {
   public function setAddress($flag, $address){
     if (isset($flag)) {
-        $address = app('app.contracts.Address')
-                        ->prepareStoreAddress(AddressData::from([
+        $address = app(config('app.contracts.Address'))
+                        ->prepareStoreAddress(AddressData::from($this->mergeArray($address,[
                             'flag'       => $flag,
                             'model_id'   => $this->getKey(),
                             'model_type' => $this->getMorphClass(),
-                            ...$address
-                        ]));
+                        ])));
         return $address;
     } else {
         return null;

@@ -21,7 +21,6 @@ class Address extends BaseModel
     'props'
   ];
   protected $show = [
-    'props'
   ];
 
   protected $cast = [
