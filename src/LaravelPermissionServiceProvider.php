@@ -21,9 +21,7 @@ class LaravelPermissionServiceProvider extends BaseServiceProvider
                 '*',
                 'Services' => function () {
                     $this->binds([
-                        Contracts\LaravelPermission::class => new LaravelPermission,
-                        Contracts\Permission::class => new Schemas\Permission,
-                        Contracts\Role::class => new Schemas\Role,
+                        Contracts\Schemas\Menu::class => Schemas\Permission::class
                     ]);
                 }
             ]);
