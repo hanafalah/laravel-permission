@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelPermission\Contracts\Schemas\Role as ContractsRole;
 use Hanafalah\LaravelPermission\Data\RoleData;
-use Hanafalah\LaravelPermission\Resources\Role\{ViewRole, ShowRole};
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
 class Role extends PackageManagement implements ContractsRole
@@ -15,12 +14,12 @@ class Role extends PackageManagement implements ContractsRole
     protected string $__entity = 'Role';
     public static $role_model;
 
-    public function showUsingRelation(): array{
-        return ['permissions'];
+    protected function viewUsingRelation(): array{
+        return [];
     }
 
-    public function viewUsingRelation(): array{
-        return [];
+    protected function showUsingRelation(): array{
+        return ['permissions'];
     }
 
     public function getRoleModel(): mixed{

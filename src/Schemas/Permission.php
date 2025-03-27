@@ -14,16 +14,14 @@ use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
 class Permission extends PackageManagement implements ContractsPermission,Menu
 {
-    protected array $__guard   = ['id', 'parent_id', 'alias'];
-    protected array $__add     = ['name', 'slug', 'root', 'type', 'guard_name', 'visibility'];
     protected string $__entity = 'Permission';
     public static $permission_model;
 
-    public function getPermissionModel(): mixed{
-        return static::$permission_model;
+    protected function viewUsingRelation(): array{
+        return [];
     }
 
-    public function showUsingRelation(): array{
+    protected function showUsingRelation(): array{
         return [];
     }
 
@@ -76,7 +74,7 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
                 $model[$key] = $this->prepareShowPermission($new_model, $attributes);
             }
         } else {
-            $model ??= $this->getPermissionModel();
+            $model ??= $this->getPermission();
             if (!isset($model)) {
                 $id = $attributes['id'] ?? null;
                 if (!isset($id)) throw new \Exception("Data tidak dapat diproses");
