@@ -5,7 +5,7 @@ namespace Hanafalah\LaravelPermission\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Hanafalah\LaravelPermission\Contracts\Role as ContractsRole;
+use Hanafalah\LaravelPermission\Contracts\Schemas\Role as ContractsRole;
 use Hanafalah\LaravelPermission\Data\RoleData;
 use Hanafalah\LaravelPermission\Resources\Role\{ViewRole, ShowRole};
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
