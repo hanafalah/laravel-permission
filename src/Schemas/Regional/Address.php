@@ -4,7 +4,7 @@ namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Hanafalah\ModuleRegional\Contracts\Regional\Address as RegionalAddress;
+use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Address as RegionalAddress;
 use Hanafalah\ModuleRegional\Data\AddressData;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

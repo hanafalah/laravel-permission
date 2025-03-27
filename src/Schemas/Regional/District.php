@@ -4,8 +4,8 @@ namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Hanafalah\ModuleRegional\Contracts\Regional\District as RegionalDistrict;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\District as RegionalDistrict;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
 class District extends PackageManagement implements RegionalDistrict
