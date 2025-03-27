@@ -4,7 +4,7 @@ namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Hanafalah\ModuleRegional\Contracts\Regional\Subdistrict as RegionalSubdistrict;
+use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Subdistrict as RegionalSubdistrict;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
