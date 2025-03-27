@@ -10,8 +10,6 @@ use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 
 interface Role extends DataManagement
 {
-    public function showUsingRelation(): array;
-    public function viewUsingRelation(): array;
     public function getRoleModel(): mixed;
     public function prepareViewRoleList(?array $attributes = null): Collection;
     public function viewRoleList(): array;
@@ -22,4 +20,5 @@ interface Role extends DataManagement
     public function prepareDeleteRole(?array $attributes = null): bool;
     public function deleteRole(): bool;
     public function role(mixed $conditionals = null): Builder;
+    
 }
