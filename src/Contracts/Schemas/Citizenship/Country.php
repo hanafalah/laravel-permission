@@ -1,8 +1,8 @@
 <?php
 
-namespace Hanafalah\ModuleRegional\Contracts\Citizenship;
+namespace Hanafalah\ModuleRegional\Contracts\Schemas\Citizenship;
 
-use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\LaravelSupport\Data\PaginateData;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;

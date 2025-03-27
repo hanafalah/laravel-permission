@@ -43,7 +43,11 @@ class AddressData extends Data{
 
         #[MapName('village_id')]
         #[MapInputName('village_id')]
-        public ?int $village_id = null
+        public ?int $village_id = null,
+
+        #[MapName('props')]
+        #[MapInputName('props')]
+        public ?AddressPropsData $props = null
     ){
         if (!isset($this->flag)) $this->flag = Flag::OTHER->value;
     }

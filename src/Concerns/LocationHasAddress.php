@@ -4,8 +4,7 @@ namespace Hanafalah\ModuleRegional\Concerns;
 
 trait LocationHasAddress
 {
-  public function initializeHasLocation()
-  {
+  public function initializeLocationHasAddress(){
     $this->mergeFillable([
       'id','code','name','latitude','longitude'
     ], $this->getFillable());
