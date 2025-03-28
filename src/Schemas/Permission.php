@@ -29,12 +29,13 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
         return static::$permission_model;
     }
 
-    public function prepareStorePermission(?array $attributes = null): Model{
+    public function prepareStorePermission(?array $attributes = null): array{
         $attributes ??= request()->all();
+        $permissions = [];
         foreach ($attributes as $attribute) {
-            $permission = $this->addPermission($attribute);
+            $permissions[] = $this->addPermission($this->requestDTO(PermissionData::class,$attribute));
         }
-        return $permission;
+        return $permissions;
     }
 
     public function prepareViewPermissionList(?array $attributes = null): Collection{
@@ -54,9 +55,12 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
     public function prepareViewMenuList(?array $attributes = null): Collection{
         $attributes ??= request()->all();
         
-        $permission = $this->permission()->whereNull('parent_id')->with('recursiveMenus')
-                           ->asMenu()->get();
+        if (!isset($attributes['role_id'])) throw new \Exception('Role id not found');
 
+        $permission = $this->permission()->whereNull('parent_id')->with('recursiveMenus')
+                            ->whereHas('roleHasPermission',function($query) use ($attributes){
+                                $query->where('role_id',$attributes['role_id']);
+                            })->asMenu()->get();
         return static::$permission_model = $permission;
     }
 
@@ -101,6 +105,7 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
             'name'      => $permission_dto->name,
             'type'      => $permission_dto->type
         ]);
+        $permission->refresh();
         if (isset($permission_dto->props)) {
             foreach ($permission_dto->props as $key => $prop) {
                 $permission->{$key} = $prop;

@@ -10,7 +10,7 @@ use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 interface Permission extends DataManagement
 {
     public function getPermission(): mixed;
-    public function prepareStorePermission(?array $attributes = null): Model;
+    public function prepareStorePermission(?array $attributes = null): array;
     public function prepareViewPermissionList(?array $attributes = null): Collection;
     public function viewPermissionList(): array;
     public function prepareShowPermission(?Model $model = null, ?array $attributes = null): Model;

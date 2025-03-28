@@ -64,7 +64,7 @@ trait HasPermission
         if (!$by_id) $permissions = $this->readPermissions($permissions);
         $this->permissions()->detach();
         foreach ($permissions as $permission) {
-            if (\is_subclass_of($this, Role::class)) {
+            if ($this->getMorphClass() == 'Role' || is_subclass_of($this, Role::class)) {
                 $this->roleHasPermissions()->updateOrCreate([
                     'role_id'       => $this->getKey(),
                     'permission_id' => $permission
