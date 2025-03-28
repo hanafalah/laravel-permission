@@ -55,9 +55,12 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
     public function prepareViewMenuList(?array $attributes = null): Collection{
         $attributes ??= request()->all();
         
-        $permission = $this->permission()->whereNull('parent_id')->with('recursiveMenus')
-                           ->asMenu()->get();
+        if (!isset($attributes['role_id'])) throw new \Exception('Role id not found');
 
+        $permission = $this->permission()->whereNull('parent_id')->with('recursiveMenus')
+                            ->whereHas('roleHasPermission',function($query) use ($attributes){
+                                $query->where('role_id',$attributes['role_id']);
+                            })->asMenu()->get();
         return static::$permission_model = $permission;
     }
 

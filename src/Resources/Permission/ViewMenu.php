@@ -22,22 +22,13 @@ class ViewMenu extends ApiResource
       'method'      => $this->method,
       'slug'        => $this->slug,
       'access'      => true,
-      'icon'        => $this->icon
+      'icon'        => $this->icon,
+      'childs'      => $this->relationValidation('recursiveMenus',function(){
+        return $this->recursiveMenus->transform(function($menu){
+          return new static($menu);
+        });
+      })
     ];
-    if ($this->type == Type::MENU->value) {
-      $this->load(['childs' => function ($q) {
-        $q->where('type', Type::MENU->value)
-          ->whereHas('roleHasPermission', function ($q) {
-            $q->where('role_id', $this->role_id);
-          })
-          ->orderBy('name', 'asc');
-      }]);
-      if (count($this->childs) > 0) {
-        foreach ($this->childs as $child) {
-          $arr['childs'][] = new ViewMenu($child);
-        }
-      }
-    }
 
     return $arr;
   }
