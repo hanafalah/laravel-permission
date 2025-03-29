@@ -2,12 +2,12 @@
 
 namespace Hanafalah\LaravelPermission\Data;
 
+use Hanafalah\LaravelPermission\Contracts\Data\RoleData as DataRoleData;
 use Hanafalah\LaravelSupport\Supports\Data;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Attributes\Validation\ArrayType;
 
-class RoleData extends Data
+class RoleData extends Data implements DataRoleData
 {
     public function __construct(
         #[MapInputName('id')]
