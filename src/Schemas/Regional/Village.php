@@ -3,7 +3,7 @@
 namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
-use Hanafalah\LaravelSupport\Data\PaginateData;
+use Hanafalah\LaravelSupport\Contracts\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;

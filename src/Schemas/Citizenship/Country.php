@@ -2,7 +2,7 @@
 
 namespace Hanafalah\ModuleRegional\Schemas\Citizenship;
 
-use Hanafalah\LaravelSupport\Data\PaginateData;
+use Hanafalah\LaravelSupport\Contracts\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Hanafalah\ModuleRegional\Contracts\Schemas\Citizenship\Country as CitizenshipCountry;
 use Illuminate\Database\Eloquent\Builder;
