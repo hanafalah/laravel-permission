@@ -36,7 +36,8 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
 
     private function recursiveRoles(string $file_name, mixed $permissions){
         $role = Str::replace('.php','',$file_name);
-        $role = Str::studly($role);
+        $role = Str::replace('_','',$role);
+        $role = Str::title($role);
         $role = $this->RoleModel()->firstOrCreate(['name' => $role]);
         try {
             $role->syncPermissions($permissions);
