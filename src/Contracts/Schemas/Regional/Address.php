@@ -3,7 +3,7 @@
 namespace Hanafalah\ModuleRegional\Contracts\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
-use Hanafalah\LaravelSupport\Data\PaginateData;
+use Hanafalah\LaravelSupport\Contracts\Data\PaginateData;
 use Hanafalah\ModuleRegional\Data\AddressData;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

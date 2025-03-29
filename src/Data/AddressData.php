@@ -3,11 +3,12 @@
 namespace Hanafalah\ModuleRegional\Data;
 
 use Hanafalah\LaravelSupport\Supports\Data;
+use Hanafalah\ModuleRegional\Contracts\Data\AddressData as DataAddressData;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 use Hanafalah\ModuleRegional\Enums\Address\Flag;
 
-class AddressData extends Data{
+class AddressData extends Data implements DataAddressData{
     public function __construct(
         #[MapName('id')]
         #[MapInputName('id')]
