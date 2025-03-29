@@ -2,12 +2,13 @@
 
 namespace Hanafalah\LaravelPermission\Data;
 
+use Hanafalah\LaravelPermission\Contracts\Data\PermissionData as DataPermissionData;
 use Hanafalah\LaravelSupport\Supports\Data;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
-class PermissionData extends Data
+class PermissionData extends Data implements DataPermissionData
 {
     public function __construct(
         #[MapInputName('id')]

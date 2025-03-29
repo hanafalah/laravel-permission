@@ -9,7 +9,7 @@ use Hanafalah\LaravelPermission\Contracts\Schemas\{
     Permission as ContractsPermission,
     Menu
 };
-use Hanafalah\LaravelPermission\Data\PermissionData;
+use Hanafalah\LaravelPermission\Contracts\Data\PermissionData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
 class Permission extends PackageManagement implements ContractsPermission,Menu

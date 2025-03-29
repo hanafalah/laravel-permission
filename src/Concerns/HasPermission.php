@@ -12,7 +12,7 @@ trait HasPermission
     {
         $permission_key = $this->PermissionModel()->getForeignKey();
 
-        if (\is_subclass_of($this, Role::class)) {
+        if ($this->isRole()) {
             return $this->belongsToManyModel(
                 'Permission',
                 'RoleHasPermission',
@@ -33,7 +33,7 @@ trait HasPermission
     {
         $permission_key = $this->PermissionModel()->getKeyName();
         $permission_foreign = $this->PermissionModel()->getForeignKey();
-        if (\is_subclass_of($this, Role::class)) {
+        if ($this->isRole()) {
             return $this->hasOneThroughModel(
                 'Permission',
                 'RoleHasPermission',
@@ -64,7 +64,7 @@ trait HasPermission
         if (!$by_id) $permissions = $this->readPermissions($permissions);
         $this->permissions()->detach();
         foreach ($permissions as $permission) {
-            if ($this->getMorphClass() == 'Role' || is_subclass_of($this, Role::class)) {
+            if ($this->isRole()) {
                 $this->roleHasPermissions()->updateOrCreate([
                     'role_id'       => $this->getKey(),
                     'permission_id' => $permission
@@ -77,6 +77,10 @@ trait HasPermission
                 ]);
             }
         }
+    }
+
+    private function isRole(): bool{
+        return ($this->getMorphClass() == 'Role' || is_subclass_of($this, Role::class));
     }
 
     public function addPermission(object|string $permission): void
