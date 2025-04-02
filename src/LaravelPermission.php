@@ -51,7 +51,6 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
         if ($permission['type'] !== Type::PERMISSION->value){
             $permission['alias'] .= ($is_show_acl) ? '.index' : '.';
             if ($alias != '') $permission['alias'] = $alias.$permission['alias'];
-            
             if ($is_show_acl) {
                 $permission['directory'] = Str::replace('.','/',$permission['alias']);
                 $directory = &$permission['directory'];

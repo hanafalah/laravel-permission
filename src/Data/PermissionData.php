@@ -7,6 +7,7 @@ use Hanafalah\LaravelSupport\Supports\Data;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\DataCollection;
 
 class PermissionData extends Data implements DataPermissionData
 {
@@ -46,6 +47,6 @@ class PermissionData extends Data implements DataPermissionData
         #[MapInputName('childs')]
         #[MapName('childs')]
         #[DataCollectionOf(PermissionData::class)]
-        public ?array $childs = []
+        public ?array $childs = null
     ) {}
 }

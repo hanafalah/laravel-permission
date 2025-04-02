@@ -29,7 +29,7 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
         return static::$permission_model;
     }
 
-    public function prepareStorePermission(?array $attributes = null): array{
+    public function prepareStorePermission(?array $attributes = null): array{        
         $attributes ??= request()->all();
         $permissions = [];
         foreach ($attributes as $attribute) {
