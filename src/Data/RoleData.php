@@ -9,24 +9,25 @@ use Spatie\LaravelData\Attributes\MapName;
 
 class RoleData extends Data implements DataRoleData
 {
-    public function __construct(
-        #[MapInputName('id')]
-        #[MapName('id')]
-        public mixed $id = null,
+    #[MapInputName('id')]
+    #[MapName('id')]
+    public mixed $id = null;
 
-        #[MapInputName('name')]
-        #[MapName('name')]
-        public string $name,
+    #[MapInputName('name')]
+    #[MapName('name')]
+    public string $name;
 
-        #[MapInputName('permission_id')]
-        #[MapName('permission_id')]
-        public mixed $permission_id = null,
+    #[MapInputName('permission_id')]
+    #[MapName('permission_id')]
+    public mixed $permission_id = null;
 
-        #[MapInputName('permissions')]
-        #[MapName('permissions')]
-        public ?array $permissions = []
-    ) {
-        $this->permissions = $this->permission_id ?? $this->permissions ?? [];
-        $this->permissions = $this->mustArray($this->permissions);
+    #[MapInputName('permissions')]
+    #[MapName('permissions')]
+    public ?array $permissions = [];
+
+    public static function after(RoleData $data): RoleData{
+        $data->permissions = $data->permission_id ?? $data->permissions ?? [];
+        $data->permissions = static::new()->mustArray($data->permissions);
+        return $data;
     }
 }

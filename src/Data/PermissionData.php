@@ -11,42 +11,40 @@ use Spatie\LaravelData\DataCollection;
 
 class PermissionData extends Data implements DataPermissionData
 {
-    public function __construct(
-        #[MapInputName('id')]
-        #[MapName('id')]
-        public mixed $id = null,
+    #[MapInputName('id')]
+    #[MapName('id')]
+    public mixed $id = null;
 
-        #[MapInputName('parent_id')]
-        #[MapName('parent_id')]
-        public mixed $parent_id = null,
+    #[MapInputName('parent_id')]
+    #[MapName('parent_id')]
+    public mixed $parent_id = null;
 
-        #[MapInputName('name')]
-        #[MapName('name')]
-        public string $name,
+    #[MapInputName('name')]
+    #[MapName('name')]
+    public string $name;
 
-        #[MapInputName('alias')]
-        #[MapName('alias')]
-        public ?string $alias = null,
-        
-        #[MapInputName('type')]
-        #[MapName('type')]
-        public ?string $type = 'Permission',
+    #[MapInputName('alias')]
+    #[MapName('alias')]
+    public ?string $alias = null;
+    
+    #[MapInputName('type')]
+    #[MapName('type')]
+    public ?string $type = 'Permission';
 
-        #[MapInputName('guard_name')]
-        #[MapName('guard_name')]
-        public ?string $guard_name = 'api',
+    #[MapInputName('guard_name')]
+    #[MapName('guard_name')]
+    public ?string $guard_name = 'api';
 
-        #[MapInputName('visibility')]
-        #[MapName('visibility')]
-        public ?bool $visibility = true,
+    #[MapInputName('visibility')]
+    #[MapName('visibility')]
+    public ?bool $visibility = true;
 
-        #[MapInputName('props')]
-        #[MapName('props')]
-        public ?array $props = null,
+    #[MapInputName('props')]
+    #[MapName('props')]
+    public ?array $props = null;
 
-        #[MapInputName('childs')]
-        #[MapName('childs')]
-        #[DataCollectionOf(PermissionData::class)]
-        public ?array $childs = null
-    ) {}
+    #[MapInputName('childs')]
+    #[MapName('childs')]
+    #[DataCollectionOf(PermissionData::class)]
+    public ?array $childs = null;
 }
