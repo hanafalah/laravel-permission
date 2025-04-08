@@ -27,7 +27,7 @@ class AddressData extends Data implements DataAddressData{
 
     #[MapName('flag')]
     #[MapInputName('flag')]
-    public ?string $flag = null;
+    public ?string $flag = Flag::OTHER->value;
 
     #[MapName('province_id')]
     #[MapInputName('province_id')]
@@ -48,9 +48,4 @@ class AddressData extends Data implements DataAddressData{
     #[MapName('props')]
     #[MapInputName('props')]
     public ?AddressPropsData $props = null;
-    
-    public static function after(AddressData $data): AddressData{
-        if (!isset($data->flag)) $data->flag = Flag::OTHER->value;
-        return $data;
-    }
 }
