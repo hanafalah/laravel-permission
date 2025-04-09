@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "hanafalah/laravel-has-props": "1.x",
-        "hanafalah/laravel-support": "1.x"
+        "hanafalah/laravel-has-props": "1.x-dev as 1.0",
+        "hanafalah/laravel-support": "1.x-dev as 1.0"
     },
     "extra": {
         "laravel": {
@@ -21,7 +21,5 @@
                 "Hanafalah\\LaravelPermission\\LaravelPermissionServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": false
+    }
 }
