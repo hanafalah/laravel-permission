@@ -37,11 +37,12 @@ class InstallMakeCommand extends EnvironmentCommand
             '--provider' => $provider,
             '--tag'      => 'migrations'
         ]);
-        $this->info('✔️  Created migrations');
 
-        $migrations = $this->setMigrationBasePath(database_path('migrations'))->canMigrate();
-        $this->callSilent('migrate', ['--path' => $migrations]);
-        $this->info('✔️  App table migrated');
+        $this->callSilent('vendor:publish', [
+            '--provider' => $provider,
+            '--tag'      => 'data'
+        ]);
+        $this->info('✔️  Created migrations');
 
         $this->comment('hanafalah/module-regional installed successfully.');
     }

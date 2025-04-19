@@ -43,7 +43,7 @@ return new class extends Migration
                 $table->string('model_type', 50)->nullable(false);
                 $table->string('model_id', 36)->nullable(false);
                 $table->enum('flag', [
-                    Flag::ID_CARD->value,
+                    Flag::KTP->value,
                     Flag::RESIDENCE->value,
                     Flag::OTHER->value
                 ])->nullable(false);
