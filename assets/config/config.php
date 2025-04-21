@@ -7,6 +7,7 @@ use Hanafalah\LaravelPermission\{
 };
 
 return [
+    'namespace' => 'Hanafalah\\LaravelPermission',
     'app' => [
         'contracts' => [
             //ADD YOUR CONTRACTS HERE
@@ -16,7 +17,9 @@ return [
         'model' => 'Models',
         'contract' => 'Contracts',
         'schema' => 'Schemas',
-        'database' => 'Database'
+        'database' => 'Database',
+        'data' => 'Data',
+        'resource' => 'Resources'
     ],
     'database' => [
         'models' => [
