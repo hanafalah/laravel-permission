@@ -3,12 +3,21 @@
 namespace Hanafalah\ModuleRegional\Contracts\Schemas\Citizenship;
 
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
-use Hanafalah\LaravelSupport\Contracts\Data\PaginateData;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\LengthAwarePaginator;
 
+/**
+ * @see \Hanafalah\ModuleRegional\Schemas\Country
+ * @method self conditionals(mixed $conditionals)
+ * @method array storeCountry(?CountryData $rab_work_list_dto = null)
+ * @method bool deleteCountry()
+ * @method bool prepareDeleteCountry(? array $attributes = null)
+ * @method mixed getCountry()
+ * @method ?Model prepareShowCountry(?Model $model = null, ?array $attributes = null)
+ * @method array showCountry(?Model $model = null)
+ * @method array viewCountryList()
+ * @method Collection prepareViewCountryList(? array $attributes = null)
+ * @method LengthAwarePaginator prepareViewCountryPaginate(PaginateData $paginate_dto)
+ * @method array viewCountryPaginate(?PaginateData $paginate_dto = null)
+ * @method Builder function country(mixed $conditionals = null)
+ */
 interface Country extends DataManagement{
-    public function country(mixed $conditionals = null): Builder;
-    public function prepareViewCountryPaginate(PaginateData $paginate_dto): LengthAwarePaginator;
-    public function viewCountryPaginate(?PaginateData $paginate_dto = null);
 }
