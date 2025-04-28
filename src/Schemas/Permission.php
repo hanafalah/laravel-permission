@@ -17,14 +17,6 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
     protected string $__entity = 'Permission';
     public static $permission_model;
 
-    protected function viewUsingRelation(): array{
-        return [];
-    }
-
-    protected function showUsingRelation(): array{
-        return [];
-    }
-
     public function getPermission(): mixed{
         return static::$permission_model;
     }

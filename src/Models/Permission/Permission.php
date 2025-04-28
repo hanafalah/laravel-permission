@@ -54,6 +54,14 @@ class Permission extends BaseModel
         });
     }
 
+    public function viewUsingRelation(): array{
+        return [];
+    }
+
+    public function showUsingRelation(): array{
+        return [];
+    }
+
     public function getViewResource(){
         return ViewPermission::class;
     }

@@ -16,5 +16,4 @@ interface Permission extends DataManagement
     public function prepareShowPermission(?Model $model = null, ?array $attributes = null): Model;
     public function showPermission(?Model $model = null): array;
     public function permission(mixed $conditionals = null): Builder;
-    
 }

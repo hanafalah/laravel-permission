@@ -19,7 +19,8 @@ return [
         'schema' => 'Schemas',
         'database' => 'Database',
         'data' => 'Data',
-        'resource' => 'Resources'
+        'resource' => 'Resources',
+        'migration' => '../assets/database/migrations'
     ],
     'database' => [
         'models' => [
