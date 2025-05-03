@@ -1,19 +1,29 @@
 <?php
 
-use Hanafalah\ModuleRegional\Models as ModuleRegionalModels;
-use Hanafalah\ModuleRegional\Commands as ModuleRegionalCommands;
+use Hanafalah\ModuleRegional\Commands;
 
 return [
-    'commands' => [
-        ModuleRegionalCommands\InstallMakeCommand::class
+    'namespace' => 'Hanafalah\\ModuleRegional',
+    'app' => [
+        'contracts' => [
+            //ADD YOUR CONTRACTS HERE
+        ],
     ],
     'libs' => [
         'model' => 'Models',
-        'contract' => 'Contracts'
+        'contract' => 'Contracts',
+        'schema' => 'Schemas',
+        'database' => 'Database',
+        'data' => 'Data',
+        'resource' => 'Resources',
+        'migration' => '../assets/database/migrations'
     ],
     'database' => [
         'models' => [
             //ADD YOUR MODEL HERE
         ]
+    ],
+    'commands' => [
+        Commands\InstallMakeCommand::class
     ]
 ];
