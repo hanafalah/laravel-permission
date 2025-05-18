@@ -2,7 +2,6 @@
 
 namespace Hanafalah\LaravelPermission\Concerns;
 
-use Illuminate\Support\Facades\DB;
 use Hanafalah\LaravelHasProps\Models\Scopes\HasCurrentScope;
 use Illuminate\Database\Eloquent\Model;
 

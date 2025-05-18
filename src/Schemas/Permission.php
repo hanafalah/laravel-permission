@@ -16,10 +16,7 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
 {
     protected string $__entity = 'Permission';
     public static $permission_model;
-
-    public function getPermission(): mixed{
-        return static::$permission_model;
-    }
+    protected mixed $__order_by_created_at = false; //asc, desc, false
 
     public function prepareStorePermission(?array $attributes = null): array{        
         $attributes ??= request()->all();
@@ -36,12 +33,6 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
         $permission = $this->permission()->whereNull('parent_id')->with('recursiveChilds')->get();
 
         return static::$permission_model = $permission;
-    }
-
-    public function viewPermissionList(): array{
-        return $this->viewEntityResource(function(){
-            return $this->prepareViewPermissionList();
-        });
     }
 
     public function prepareViewMenuList(?array $attributes = null): Collection{
@@ -81,12 +72,6 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
             }
         }
         return static::$permission_model = $model;
-    }
-
-    public function showPermission(?Model $model = null): array{
-        return $this->showEntityResource(function() use ($model){
-            return $this->prepareShowPermission($model);
-        });
     }
 
     private function addPermission(PermissionData $permission_dto){
