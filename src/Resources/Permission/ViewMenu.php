@@ -16,6 +16,7 @@ class ViewMenu extends ApiResource
   public function toArray($request): array
   {
     $arr = [
+      'id'          => $this->id,
       'name'        => $this->name,
       'alias'       => $this->alias,
       'directory'   => $this->directory,

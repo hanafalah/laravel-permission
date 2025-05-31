@@ -60,8 +60,7 @@ class ViewPermission extends ApiResource
     return $arr;
   }
 
-  private function clearence($permission_alias)
-  {
+  private function clearence($permission_alias){
     $alias = Str::beforeLast($this->alias, '.', $permission_alias);
     $alias = Str::replace($alias . '.', '', $permission_alias);
     return $alias;
