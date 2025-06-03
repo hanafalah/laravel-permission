@@ -8,6 +8,16 @@ use Hanafalah\LaravelPermission\Supports\BaseLaravelPermission;
 use Illuminate\Support\Str;
 
 class LaravelPermission extends BaseLaravelPermission implements ContractsLaravelPermission {
+    protected $__for_api = true;
+
+    public function setForApi(bool $validate): void{
+        $this->__for_api = $validate;
+    }
+
+    public function getForApi(): bool{
+        return $this->__for_api;
+    }
+
     public function scanRoles(string $path): array{
         return $this->fileScans($path,'role');
     }
@@ -36,7 +46,8 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
 
     private function recursiveRoles(string $file_name, mixed $permissions){
         $role = Str::replace('.php','',$file_name);
-        $role = Str::replace('_','',$role);
+        $role = Str::snake($role);
+        $role = Str::replace('_',' ',$role);
         $role = Str::title($role);
         $role = $this->RoleModel()->firstOrCreate(['name' => $role]);
         try {
@@ -58,10 +69,14 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
                 $directory = Str::replace('/show','',$directory);
             }
             if ($this->isPermissionHasChild($permission)){
+                $permission_alias = $permission['alias'];
+                $permission_alias = Str::replace('index','',$permission_alias);
+                $permission_alias = Str::replace('show','',$permission_alias);
                 foreach ($permission['childs'] as &$child_permission) {
-                    $this->recursivePermissions($child_permission, $permission['alias']);
+                    $this->recursivePermissions($child_permission, $permission_alias);
                 }
             }
+            $permission['guard_name'] = $this->__for_api ? 'api' : 'web';
         }else{
             $alias = Str::replace('.index','',$alias);
             $alias = Str::replace('.show','',$alias);
