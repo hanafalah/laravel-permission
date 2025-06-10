@@ -9,12 +9,16 @@ use Hanafalah\ModuleRegional\Enums\Address\Flag;
 use Hanafalah\ModuleRegional\Resources\Address\{
   ViewAddress, ShowAddress
 };
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Address extends BaseModel
 {
-  use HasProps, HasLocation, SoftDeletes;
+  use HasUlids, HasProps, HasLocation, SoftDeletes;
 
+  public $incrementing = false;
+  protected $keyType = 'string';
+  protected $primaryKey = 'id';
   protected $list = [
     'id', 'name', 'model_type', 'model_id', 'flag', 
     'province_id', 'district_id', 'subdistrict_id', 'village_id', 

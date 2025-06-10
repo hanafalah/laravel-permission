@@ -3,12 +3,21 @@
 namespace Hanafalah\ModuleRegional\Contracts\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
-use Hanafalah\LaravelSupport\Contracts\Data\PaginateData;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\LengthAwarePaginator;
 
+/**
+ * @see \Hanafalah\ModuleRegional\Schemas\Village
+ * @method self conditionals(mixed $conditionals)
+ * @method array storeVillage(?VillageData $rab_work_list_dto = null)
+ * @method bool deleteVillage()
+ * @method bool prepareDeleteVillage(? array $attributes = null)
+ * @method mixed getVillage()
+ * @method ?Model prepareShowVillage(?Model $model = null, ?array $attributes = null)
+ * @method array showVillage(?Model $model = null)
+ * @method array viewVillageList()
+ * @method Collection prepareViewVillageList(? array $attributes = null)
+ * @method LengthAwarePaginator prepareViewVillagePaginate(PaginateData $paginate_dto)
+ * @method array viewVillagePaginate(?PaginateData $paginate_dto = null)
+ * @method Builder function village(mixed $conditionals = null)
+ */
 interface Village extends DataManagement{
-    public function village(mixed $conditionals = null): Builder;
-    public function prepareViewVillagePaginate(PaginateData $paginate_dto): LengthAwarePaginator;
-    public function viewVillagePaginate(?PaginateData $paginate_dto = null);
 }

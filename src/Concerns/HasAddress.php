@@ -9,11 +9,11 @@ trait HasAddress
   public function setAddress($flag, $address){
     if (isset($flag)) {
         $address = app(config('app.contracts.Address'))
-                        ->prepareStoreAddress(AddressData::from($this->mergeArray($address,[
-                            'flag'       => $flag,
-                            'model_id'   => $this->getKey(),
-                            'model_type' => $this->getMorphClass(),
-                        ])));
+                  ->prepareStoreAddress(AddressData::from($this->mergeArray($address,[
+                    'flag'       => $flag, 
+                    'model_id'   => $this->getKey(),
+                    'model_type' => $this->getMorphClass()
+                  ])));
         return $address;
     } else {
         return null;

@@ -6,6 +6,7 @@ use Hanafalah\LaravelSupport\Contracts\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Address as RegionalAddress;
 use Hanafalah\ModuleRegional\Data\AddressData;
+use Hanafalah\ModuleRegional\Enums\Address\Flag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +33,7 @@ class Address extends PackageManagement implements RegionalAddress{
                     : [
                         'model_type' => $address_dto->model_type,
                         'model_id'   => $address_dto->model_id,
-                        'flag'       => $address_dto->flag
+                        'flag'       => $address_dto->flag ?? Flag::OTHER->value
                     ];
         $address = $this->address()->updateOrCreate($guard,[
             'name'           => $address_dto->name,

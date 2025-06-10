@@ -21,13 +21,8 @@ class ModuleRegionalServiceProvider extends BaseServiceProvider
                 '*',
                 'Namespace' => function () {
                     $this->publishes([
-                        $this->getAssetPath('/database/migrations/data') => database_path('data'),
+                        $this->getAssetPath('/database/migrations/data') => database_path('migrations/data'),
                     ], 'data');
-                },
-                'Services' => function () {
-                    $this->binds([
-                        Contracts\ModuleRegional::class => ModuleRegional::class
-                    ]);
                 }
             ]);
     }
@@ -42,8 +37,8 @@ class ModuleRegionalServiceProvider extends BaseServiceProvider
         return __DIR__ . '/';
     }
 
-    protected function migrationPath(string $path = ''): string
-    {
-        return database_path($path);
-    }
+    // protected function migrationPath(string $path = ''): string
+    // {
+    //     return database_path($path);
+    // }
 }

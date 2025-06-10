@@ -38,12 +38,12 @@ return new class extends Migration
                 $subdistrict = app(config('database.models.Subdistrict', Subdistrict::class));
                 $village     = app(config('database.models.Village', Village::class));
 
-                $table->id();
+                $table->ulid('id')->primary();
                 $table->text('name')->nullable(false);
                 $table->string('model_type', 50)->nullable(false);
                 $table->string('model_id', 36)->nullable(false);
                 $table->enum('flag', [
-                    Flag::ID_CARD->value,
+                    Flag::KTP->value,
                     Flag::RESIDENCE->value,
                     Flag::OTHER->value
                 ])->nullable(false);
