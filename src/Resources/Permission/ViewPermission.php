@@ -26,31 +26,26 @@ class ViewPermission extends ApiResource
       'directory'   => $this->directory,
       'method'      => $this->method,
       'slug'        => $this->slug,
-      'permissions' => $this->relationValidation('childs', function () {
-        $childs = $this->childs;
-        return (object) $childs->where('type', Type::PERMISSION->value)->mapWithKeys(function ($permission) {
+      'accessibility' => $this->relationValidation('childs', function () {
+        // return $this->childs->transform(function ($permission) {
+        //   return new static($permission);
+        // });
+        return (object) $this->childs->where('type', Type::PERMISSION->value)->mapWithKeys(function ($permission) {
           $alias = $this->clearence($permission->alias);
           return [
             $alias => $permission->access ?? false
           ];
         });
       }),
-      'modules' => $this->relationValidation('childs', function () {
-        $childs = $this->childs;
-        return (object) $childs->where('type', Type::MODULE->value)->mapWithKeys(function ($permission) {
-          $alias = $this->clearence($permission->alias);
-          $alias = explode('.', $alias);
-          return [
-            $alias[0] => [
-              $alias[1] => $permission->access ?? false
-            ]
-          ];
+      'modules' => $this->relationValidation('recursiveModules', function () {
+        return $this->recursiveModules->transform(function ($permission) {
+          return new static($permission);
         });
       }),
     ];
 
     if ($this->relationLoaded('recursiveChilds') && count($this->recursiveChilds) > 0) {
-      $arr['permissions'] = $this->relationValidation('recursiveChilds', function () {
+      $arr['accessibilities'] = $this->relationValidation('recursiveChilds', function () {
         return $this->recursiveChilds->transform(function ($child) {
           return new static($child);
         });
@@ -60,8 +55,7 @@ class ViewPermission extends ApiResource
     return $arr;
   }
 
-  private function clearence($permission_alias)
-  {
+  private function clearence($permission_alias){
     $alias = Str::beforeLast($this->alias, '.', $permission_alias);
     $alias = Str::replace($alias . '.', '', $permission_alias);
     return $alias;

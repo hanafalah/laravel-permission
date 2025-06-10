@@ -2,15 +2,14 @@
 
 namespace Hanafalah\LaravelPermission\Concerns;
 
-use Illuminate\Support\Facades\DB;
 use Hanafalah\LaravelHasProps\Models\Scopes\HasCurrentScope;
+use Illuminate\Database\Eloquent\Model;
 
 trait HasRole
 {
     use RoleMutator;
 
-    public function roles()
-    {
+    public function roles(){
         return $this->belongsToManyModel(
             'Role',
             'ModelHasRole',
@@ -21,8 +20,7 @@ trait HasRole
             ->withoutGlobalScopes([HasCurrentScope::class]);
     }
 
-    public function role()
-    {
+    public function role(){
         $role_key     = $this->RoleModel()->getKeyName();
         $role_foreign = $this->RoleModel()->getForeignKey();
         return $this->hasOneThroughModel(
@@ -37,13 +35,11 @@ trait HasRole
             ->where('current', 1);
     }
 
-    public function modelHasRole()
-    {
+    public function modelHasRole(){
         return $this->morphOneModel('ModelHasRole', 'model')->withoutGlobalScopes();
     }
 
-    public function syncRoles(array $roles = []): void
-    {
+    public function syncRoles(array $roles = []): void{
         $roles = $this->readRoles($roles);
         $this->roles()->detach();
         $this->roles()->attach($roles, [
@@ -61,8 +57,18 @@ trait HasRole
         $model_has_role->save();
     }
 
-    public function addRole(object|string $role): void
-    {
+    public function switchRoleTo(object|string $role): Model{
+        $role = $this->readRole($role,true);
+        $model_has_role = $this->modelHasRole()
+            ->where('model_id', $this->getKey())
+            ->where('model_type', $this->getMorphClass())
+            ->where('role_id', $role->getKey())->first();
+        $model_has_role->current = 1;
+        $model_has_role->save();
+        return $role;
+    }
+
+    public function addRole(object|string $role): void{
         $this->roles()->attach(is_object($role) ? $role : $this->readRole($role, true), [
             'model_type' => $this->getMorphClass(),
             'created_at' => now(),
@@ -70,13 +76,11 @@ trait HasRole
         ]);
     }
 
-    public function flushRoles(): void
-    {
+    public function flushRoles(): void{
         $this->roles()->detach();
     }
 
-    public function removeRole(object|string $role): void
-    {
+    public function removeRole(object|string $role): void{
         $this->roles()->detach($this->readRole($role));
     }
 }

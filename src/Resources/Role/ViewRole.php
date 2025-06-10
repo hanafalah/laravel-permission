@@ -25,7 +25,9 @@ class ViewRole extends ApiResource
         return $childs->transform(function ($child) {
           return $child->toViewApi();
         });
-      })
+      }),
+      'created_at' => $this->created_at,
+      'updated_at' => $this->updated_at
     ];
     if (isset($this->current)) $arr['current'] = $this->current;
 

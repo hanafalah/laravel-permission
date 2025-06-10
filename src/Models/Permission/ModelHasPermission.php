@@ -14,6 +14,14 @@ class ModelHasPermission extends BaseModel
         'model_id',
         'model_type'
     ];
+    
+    public function viewUsingRelation(): array{
+        return [];
+    }
+
+    public function showUsingRelation(): array{
+        return [];
+    }
 
     public function permission(){return $this->belongsToModel('Permission');}
     public function model(){return $this->morphTo('model');}

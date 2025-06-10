@@ -9,24 +9,32 @@ use Spatie\LaravelData\Attributes\MapName;
 
 class RoleData extends Data implements DataRoleData
 {
-    public function __construct(
-        #[MapInputName('id')]
-        #[MapName('id')]
-        public mixed $id = null,
+    #[MapInputName('id')]
+    #[MapName('id')]
+    public mixed $id = null;
 
-        #[MapInputName('name')]
-        #[MapName('name')]
-        public string $name,
+    #[MapInputName('name')]
+    #[MapName('name')]
+    public string $name;
 
-        #[MapInputName('permission_id')]
-        #[MapName('permission_id')]
-        public mixed $permission_id = null,
+    #[MapInputName('permission_ids')]
+    #[MapName('permission_ids')]
+    public mixed $permission_ids = null;
 
-        #[MapInputName('permissions')]
-        #[MapName('permissions')]
-        public ?array $permissions = []
-    ) {
-        $this->permissions = $this->permission_id ?? $this->permissions ?? [];
-        $this->permissions = $this->mustArray($this->permissions);
+    #[MapInputName('permissions')]
+    #[MapName('permissions')]
+    public ?array $permissions = [];
+
+    #[MapInputName('props')]
+    #[MapName('props')]
+    public ?array $props = [];
+
+    public static function after(RoleData $data): RoleData{
+        if (isset($data->permissions)){
+            $data->permissions = array_map(fn($permission) => $permission['id'] ?? null, $data->permissions);
+        }
+        $data->permissions = $data->permission_ids ?? $data->permissions ?? [];
+        $data->permissions = static::new()->mustArray($data->permissions);
+        return $data;
     }
 }

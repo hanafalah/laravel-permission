@@ -27,14 +27,21 @@ class Role extends BaseModel
         });
     }
 
-    public function getViewResource()
-    {
-        return ViewRole::class;
+    public function viewUsingRelation(): array{
+        return [];
     }
 
-    public function getShowResource(){
-        return ShowRole::class;
+    public function showUsingRelation(): array{
+        return ['permissions' => function($query){
+            if (isset(request()->role_id)){
+                $query->checkAccess(request()->role_id);
+            }
+            $query->with('recursiveChilds');
+        }];
     }
+
+    public function getViewResource(){return ViewRole::class;}
+    public function getShowResource(){return ShowRole::class;}
 
     public function modelHasRole(){return $this->hasOneModel('ModelHasRole');}
     public function modelHasRoles(){return $this->hasManyModel('ModelHasRole');}
