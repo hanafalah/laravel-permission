@@ -14,7 +14,6 @@ use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
  * @method bool prepareDeleteRole(? array $attributes = null)
  * @method mixed getRole()
  * @method ?Model prepareShowRole(?Model $model = null, ?array $attributes = null)
- * @method array showRole(?Model $model = null)
  * @method Collection prepareViewRoleList()
  * @method array viewRoleList()
  * @method LengthAwarePaginator prepareViewRolePaginate(PaginateData $paginate_dto)
@@ -23,6 +22,7 @@ use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
  */
 interface Role extends DataManagement
 {
+    public function showRole(?Model $model = null): array;
     public function prepareStoreRole(RoleData $role_dto): Model;
     public function role(mixed $conditionals = null): Builder;
 }

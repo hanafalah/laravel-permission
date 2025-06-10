@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelPermission\Contracts\Schemas\{
-    Permission as ContractsPermission,
-    Menu
+    Permission as ContractsPermission
 };
 use Hanafalah\LaravelPermission\Contracts\Data\PermissionData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
-class Permission extends PackageManagement implements ContractsPermission,Menu
+class Permission extends PackageManagement implements ContractsPermission
 {
     protected string $__entity = 'Permission';
     public static $permission_model;
@@ -33,24 +32,6 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
         $permission = $this->permission()->whereNull('parent_id')->with('recursiveChilds')->get();
 
         return static::$permission_model = $permission;
-    }
-
-    public function prepareViewMenuList(?array $attributes = null): Collection{
-        $attributes ??= request()->all();
-        
-        if (!isset($attributes['role_id'])) throw new \Exception('Role id not found');
-
-        $permission = $this->permission()->whereNull('parent_id')->with('recursiveMenus')
-                            ->whereHas('roleHasPermission',function($query) use ($attributes){
-                                $query->where('role_id',$attributes['role_id']);
-                            })->asMenu()->get();
-        return static::$permission_model = $permission;
-    }
-
-    public function viewMenuList(): array{
-        return $this->transforming($this->usingEntity()->getViewMenuResource(),function(){
-            return $this->prepareViewMenuList();
-        });
     }
 
     public function prepareShowPermission(?Model $model = null, ?array $attributes = null): Model{
@@ -82,13 +63,15 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
             'name'      => $permission_dto->name,
             'type'      => $permission_dto->type
         ]);
+        $this->fillingProps($permission, $permission_dto->props);
+        $permission->save();
         $permission->refresh();
-        if (isset($permission_dto->props)) {
-            foreach ($permission_dto->props as $key => $prop) {
-                $permission->{$key} = $prop;
-            }
-            $permission->save();
-        }
+        // if (isset($permission_dto->props)) {
+        //     foreach ($permission_dto->props as $key => $prop) {
+        //         $permission->{$key} = $prop;
+        //     }
+        //     $permission->save();
+        // }
         if (isset($permission_dto->childs) && count($permission_dto->childs) > 0) {
             foreach ($permission_dto->childs as $child) {
                 $child->parent_id = $permission->getKey();
@@ -99,11 +82,8 @@ class Permission extends PackageManagement implements ContractsPermission,Menu
     }
 
     public function permission(mixed $conditionals = null): Builder{
-        $this->booting();
-        return $this->PermissionModel()->conditionals($this->mergeCOndition($conditionals ?? []))
-                    ->when(isset(request()->role_id), function ($query) {
-                        $query->checkAccess(request()->role_id);
-                    })
-                    ->withParameters()->orderBy('name', 'asc');
+        return $this->generalSchemaModel($conditionals)->when(isset(request()->role_id),function($query){
+            $query->checkAccess(request()->role_id);
+        });
     }
 }

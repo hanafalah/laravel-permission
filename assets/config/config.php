@@ -29,5 +29,8 @@ return [
     ],
     'commands' => [
         Commands\InstallMakeCommand::class
+    ],
+    'policies' => [
+        //alias => policy namespace
     ]
 ];

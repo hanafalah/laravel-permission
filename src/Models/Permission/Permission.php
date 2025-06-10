@@ -20,14 +20,16 @@ class Permission extends BaseModel
 
     public $timestamps = false;
     protected $fillable = [
-        'id',
-        'parent_id',
-        'name',
-        'alias',
-        'root',
-        'type',
-        'guard_name',
-        'visibility'
+        'id', 'parent_id', 'name', 'alias', 'root', 'type',
+        'guard_name', 'visibility'
+    ];
+
+    protected $casts = [
+        'name' => 'string',
+        'alias' => 'string',
+        'type' => 'string',
+        'guard_name' => 'string',
+        'visibility' => 'boolean',
     ];
 
     protected static function booted(): void
@@ -49,6 +51,12 @@ class Permission extends BaseModel
         static::created(function ($query) {
             static::rootGenerator($query);
         });
+        static::updating(function($query){
+            if ($query->type == Type::PERMISSION->value) {
+                $query->show_in_acl ??= false;
+                $query->show_in_data  = $query->show_in_acl ? false : true;
+            }
+        });
         static::updated(function ($query) {
             static::rootGenerator($query);
         });
@@ -68,10 +76,6 @@ class Permission extends BaseModel
 
     public function getShowResource(){
         return ViewPermission::class;
-    }
-
-    public function getViewMenuResource(){
-        return ViewMenu::class;
     }
 
     protected static function rootGenerator($query, mixed $dirties = null)
@@ -139,6 +143,10 @@ class Permission extends BaseModel
         return $builder->where("props->show_in_acl", true);
     }
 
+    public function scopeShowInData($builder){
+        return $builder->where("props->show_in_data", true);
+    }
+
     public function scopeCheckAccess($builder, $model_id, $model_type = 'Role')
     {
         $builder->select('*');
@@ -152,7 +160,7 @@ class Permission extends BaseModel
             $bindings = [$model_id, $model_type];
         }
         $table_name = $model->getTableName();
-        $builder->selectRaw("permissions.*,CASE WHEN EXISTS (SELECT permission_id FROM $table_name WHERE $key AND permission_id = permissions.id) THEN 1 ELSE 0 END as access", $bindings);
+        $builder->selectRaw("permissions.*,CASE WHEN EXISTS (SELECT permission_id FROM $table_name WHERE $key AND permission_id = permissions.id) THEN TRUE ELSE FALSE END as access", $bindings);
         return $builder;
     }
 
@@ -164,7 +172,12 @@ class Permission extends BaseModel
             $query->checkAccess(request()->role_id);
         })->with('recursiveChilds');
     }
-
+    public function recursiveModules(){
+        return $this->hasManyModel('Permission', 'parent_id')->when(isset(request()->role_id), function ($query) {
+            $query->checkAccess(request()->role_id);
+        })->when(isset(request()->is_show_in_acl) && request()->is_show_in_acl, fn($q) => $q->showInAcl())
+        ->asModule()->with('recursiveModules');
+    }
     public function recursiveMenus(){
         return $this->hasManyModel('Permission', 'parent_id')
         ->where('type',Type::MENU->value)

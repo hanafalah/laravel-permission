@@ -17,14 +17,7 @@ class LaravelPermissionServiceProvider extends BaseServiceProvider
     {
         $this->registerMainClass(LaravelPermission::class)
             ->registerCommandService(Providers\CommandServiceProvider::class)
-            ->registers([
-                '*',
-                'Services' => function () {
-                    $this->binds([
-                        Contracts\Schemas\Menu::class => Schemas\Permission::class
-                    ]);
-                }
-            ]);
+            ->registers(['*']);
     }
 
     /**

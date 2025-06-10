@@ -17,16 +17,23 @@ class RoleData extends Data implements DataRoleData
     #[MapName('name')]
     public string $name;
 
-    #[MapInputName('permission_id')]
-    #[MapName('permission_id')]
-    public mixed $permission_id = null;
+    #[MapInputName('permission_ids')]
+    #[MapName('permission_ids')]
+    public mixed $permission_ids = null;
 
     #[MapInputName('permissions')]
     #[MapName('permissions')]
     public ?array $permissions = [];
 
+    #[MapInputName('props')]
+    #[MapName('props')]
+    public ?array $props = [];
+
     public static function after(RoleData $data): RoleData{
-        $data->permissions = $data->permission_id ?? $data->permissions ?? [];
+        if (isset($data->permissions)){
+            $data->permissions = array_map(fn($permission) => $permission['id'] ?? null, $data->permissions);
+        }
+        $data->permissions = $data->permission_ids ?? $data->permissions ?? [];
         $data->permissions = static::new()->mustArray($data->permissions);
         return $data;
     }

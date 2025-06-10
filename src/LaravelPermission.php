@@ -57,30 +57,35 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
         }
     }
 
-    private function recursivePermissions(mixed &$permission,string $alias = ''){
+    private function recursivePermissions(mixed &$permission,string $alias = '',mixed $parent = null){
         $is_show_acl = isset($permission['show_in_acl']);
         if ($permission['type'] !== Type::PERMISSION->value){
-            $permission['alias'] .= ($is_show_acl) ? '.index' : '.';
+            $is_menu = $permission['type'] == Type::MENU->value;
+            $is_module = $permission['type'] == Type::MODULE->value;
+            $permission['alias'] .= (($is_menu || $is_module) && $is_show_acl) ? '.index' : '.';
             if ($alias != '') $permission['alias'] = $alias.$permission['alias'];
-            if ($is_show_acl) {
+            if ($is_menu && $is_show_acl){
                 $permission['directory'] = Str::replace('.','/',$permission['alias']);
                 $directory = &$permission['directory'];
                 $directory = Str::replace('/index','',$directory);
                 $directory = Str::replace('/show','',$directory);
             }
+            $permission['alias'] = Str::replace('..','.',$permission['alias']);
             if ($this->isPermissionHasChild($permission)){
-                $permission_alias = $permission['alias'];
-                $permission_alias = Str::replace('index','',$permission_alias);
-                $permission_alias = Str::replace('show','',$permission_alias);
+                $permission_alias = $permission['alias'];                
+                $permission_alias = Str::replace('.index','',$permission_alias);
+                $permission_alias = Str::replace('.show','',$permission_alias);
                 foreach ($permission['childs'] as &$child_permission) {
-                    $this->recursivePermissions($child_permission, $permission_alias);
+                    $this->recursivePermissions($child_permission, $permission_alias.'.', $permission);
                 }
             }
             $permission['guard_name'] = $this->__for_api ? 'api' : 'web';
         }else{
             $alias = Str::replace('.index','',$alias);
             $alias = Str::replace('.show','',$alias);
-            $permission['alias'] = $alias.'.'.$permission['alias'];
+            $alias = $alias.$permission['alias'];
+            $alias = Str::replace('..','.',$alias);
+            $permission['alias'] = $alias;
         }
     }
 

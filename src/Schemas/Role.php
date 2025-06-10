@@ -13,14 +13,27 @@ class Role extends PackageManagement implements ContractsRole
     protected string $__entity = 'Role';
     public static $role_model;
 
-    public function prepareStoreRole(RoleData $role_dto): Model{
-        $guard = (isset($role_dto->id)) ? ['id' => $role_dto->id] : ['name' => $role_dto->name];
-        $role  = $this->role()->updateOrCreate($guard, [
-                    'name' => $role_dto->name
-                ]);
+    public function showRole(?Model $model = null): array{
+        $id ??= $model->id ?? request()->id;
+        request()->merge([
+            'role_id' => $id
+        ]);
+        return parent::generalShow($model);
+    }
 
-        if (isset($role_dto->permission_id) || isset($role_dto->permissions)) {
-            $permissions = $role_dto->permission_id ?? $role_dto->permissions;
+    public function prepareStoreRole(RoleData $role_dto): Model{
+        $add   = ['name' => $role_dto->name];
+        if (isset($role_dto->id)){
+            $guard = ['id' => $role_dto->id];
+            $create = [$guard,$add];
+        }else{
+            $create = [$add];
+        }
+        $role  = $this->role()->updateOrCreate(...$create);
+        $this->fillingProps($role,$role_dto->props);
+
+        if (isset($role_dto->permission_ids) || isset($role_dto->permissions)) {
+            $permissions = $role_dto->permission_ids ?? $role_dto->permissions;
             $permissions = $this->mustArray($permissions);
             if (count($permissions) > 0) {
                 $role->syncPermissions($permissions, true);

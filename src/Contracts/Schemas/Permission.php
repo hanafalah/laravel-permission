@@ -23,8 +23,6 @@ interface Permission extends DataManagement
 {
     public function prepareStorePermission(?array $attributes = null): array;
     public function prepareViewPermissionList(?array $attributes = null): Collection;
-    public function prepareViewMenuList(?array $attributes = null): Collection;
-    public function viewMenuList(): array;
     public function prepareShowPermission(?Model $model = null, ?array $attributes = null): Model;
     public function permission(mixed $conditionals = null): Builder;
 }
