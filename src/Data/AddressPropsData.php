@@ -19,4 +19,12 @@ class AddressPropsData extends Data implements DataAddressPropsData{
     #[MapName('rw')]
     #[MapInputName('rw')]
     public ?string $rw = null;
+
+    #[MapName('latitude')]
+    #[MapInputName('latitude')]
+    public ?string $latitude = null;
+
+    #[MapName('longitude')]
+    #[MapInputName('longitude')]
+    public ?string $longitude = null;
 }
