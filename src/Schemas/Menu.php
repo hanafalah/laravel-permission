@@ -28,7 +28,7 @@ class Menu extends Permission implements ContractsMenu
         return $this->permission()->when(isset(request()->role_id), function ($query) {
             $query->checkAccess(request()->role_id);
         })->when(isset(request()->is_menu) && request()->is_menu,function($query){
-            $query->asMenu();
+            $query->asMenu()->whereNull('parent_id');
         })->when(isset(request()->is_module) && request()->is_module,function($query){
             $query->asModule();
         })->when(isset(request()->is_permission) && request()->is_permission,function($query){

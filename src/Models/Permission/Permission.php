@@ -92,6 +92,8 @@ class Permission extends BaseModel
                     $query->directory = implode('/', $directories);
                     $query->directory = Str::replace('/index', '', $query->directory);
                     $query->directory = Str::replace('/show', '', $query->directory);
+                    $query->directory = Str::replace('api/', '/', $query->directory);
+                    $query->directory = Str::replace('web/', '/', $query->directory);
                 }
                 if (isset($query->parent_id)) {
                     $parent = (new static)->find($query->parent_id);
