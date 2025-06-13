@@ -69,6 +69,7 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
                 $directory = &$permission['directory'];
                 $directory = Str::replace('/index','',$directory);
                 $directory = Str::replace('/show','',$directory);
+                $directory = Str::replace('//','/',$directory);
             }
             $permission['alias'] = Str::replace('..','.',$permission['alias']);
             if ($this->isPermissionHasChild($permission)){
