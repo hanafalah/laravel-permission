@@ -45,7 +45,7 @@ class ViewPermission extends ApiResource
     ];
 
     if ($this->relationLoaded('recursiveChilds') && count($this->recursiveChilds) > 0) {
-      $arr['accessibilities'] = $this->relationValidation('recursiveChilds', function () {
+      $arr['permissions'] = $this->relationValidation('recursiveChilds', function () {
         return $this->recursiveChilds->transform(function ($child) {
           return new static($child);
         });
