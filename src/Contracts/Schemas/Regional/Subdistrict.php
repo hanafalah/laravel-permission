@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @see \Hanafalah\ModuleRegional\Schemas\Subdistrict
+ * @method self setParamLogic(string $logic, bool $search_value = false, ?array $optionals = [])
  * @method self conditionals(mixed $conditionals)
  * @method array storeSubdistrict(?SubdistrictData $rab_work_list_dto = null)
  * @method bool deleteSubdistrict()
