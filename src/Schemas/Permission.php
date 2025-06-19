@@ -10,6 +10,7 @@ use Hanafalah\LaravelPermission\Contracts\Schemas\{
 };
 use Hanafalah\LaravelPermission\Contracts\Data\PermissionData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
+use Illuminate\Support\Facades\Log;
 
 class Permission extends PackageManagement implements ContractsPermission
 {
@@ -56,6 +57,7 @@ class Permission extends PackageManagement implements ContractsPermission
     }
 
     private function addPermission(PermissionData $permission_dto){
+        Log::info($permission_dto);
         $permission = $this->PermissionModel()->firstOrCreate([
             'parent_id' => $permission_dto->parent_id ?? null,
             'alias'     => $permission_dto->alias

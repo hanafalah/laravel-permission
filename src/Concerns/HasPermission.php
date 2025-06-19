@@ -54,8 +54,7 @@ trait HasPermission
         }
     }
 
-    public function syncPermissionsById(array $permissions = []): void
-    {
+    public function syncPermissionsById(array $permissions = []): void{
         $this->syncPermissions($permissions, true);
     }
 

@@ -57,8 +57,9 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
         }
     }
 
-    private function recursivePermissions(mixed &$permission,string $alias = '',mixed $parent = null){
+    private function recursivePermissions(mixed &$permission,string $alias = '',?string $original_alias = null){
         $is_show_acl = isset($permission['show_in_acl']);
+        $permission['main_alias'] = $permission['alias'];
         if ($permission['type'] !== Type::PERMISSION->value){
             $is_menu = $permission['type'] == Type::MENU->value;
             $is_module = $permission['type'] == Type::MODULE->value;
@@ -74,19 +75,25 @@ class LaravelPermission extends BaseLaravelPermission implements ContractsLarave
             $permission['alias'] = Str::replace('..','.',$permission['alias']);
             if ($this->isPermissionHasChild($permission)){
                 $permission_alias = $permission['alias'];                
-                $permission_alias = Str::replace('.index','',$permission_alias);
-                $permission_alias = Str::replace('.show','',$permission_alias);
+                $permission_alias = Str::replaceLast('.index','',$permission_alias);
+                // $permission_alias = Str::replaceLast('.show','',$permission_alias);
                 foreach ($permission['childs'] as &$child_permission) {
-                    $this->recursivePermissions($child_permission, $permission_alias.'.', $permission);
+                    $this->recursivePermissions($child_permission, $permission_alias.'.');
                 }
             }
             $permission['guard_name'] = $this->__for_api ? 'api' : 'web';
         }else{
-            $alias = Str::replace('.index','',$alias);
-            $alias = Str::replace('.show','',$alias);
+            $alias = Str::replaceLast('.index','',$alias);
+            // $alias = Str::replaceLast('.show','',$alias);
             $alias = $alias.$permission['alias'];
             $alias = Str::replace('..','.',$alias);
             $permission['alias'] = $alias;
+            if ($this->isPermissionHasChild($permission)){
+                foreach ($permission['childs'] as &$child_permission) {
+                    $this->recursivePermissions($child_permission, $permission['alias'].'.');
+                }
+            }
+            return $permission;
         }
     }
 

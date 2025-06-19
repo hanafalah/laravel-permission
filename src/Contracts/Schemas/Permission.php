@@ -9,6 +9,7 @@ use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 
 /**
  * @see \Hanafalah\LaravelPermission\Schemas\Permission
+ * @method self setParamLogic(string $logic, bool $search_value = false, ?array $optionals = [])
  * @method self conditionals(mixed $conditionals)
  * @method bool deletePermission()
  * @method bool prepareDeletePermission(? array $attributes = null)

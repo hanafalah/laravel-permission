@@ -54,7 +54,7 @@ class Permission extends BaseModel
         static::updating(function($query){
             if ($query->type == Type::PERMISSION->value) {
                 $query->show_in_acl ??= false;
-                $query->show_in_data  = $query->show_in_acl ? false : true;
+                $query->show_in_data ??= $query->show_in_acl ? false : true;
             }
         });
         static::updated(function ($query) {

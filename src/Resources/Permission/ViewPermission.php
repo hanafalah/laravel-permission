@@ -22,6 +22,7 @@ class ViewPermission extends ApiResource
       'name'        => $this->name,
       'parent_id'   => $this->parent_id,
       'alias'       => $alias,
+      'original_alias' => $this->alias,
       'access'      => ($this->access ?? 0) == 1 ? true : false,
       'directory'   => $this->directory,
       'method'      => $this->method,
@@ -38,9 +39,16 @@ class ViewPermission extends ApiResource
         });
       }),
       'modules' => $this->relationValidation('recursiveModules', function () {
-        return $this->recursiveModules->transform(function ($permission) {
-          return new static($permission);
+        return (object) $this->recursiveModules->where('type', Type::MODULE->value)->mapWithKeys(function ($permission) {
+          $alias = $this->clearence($permission->alias,false);
+          if (Str::startsWith($alias, 'show.')) $alias = Str::after($alias,'show.');
+          return [
+            $alias => $permission->access ?? false
+          ];
         });
+        // return $this->recursiveModules->transform(function ($permission) {
+        //   return new static($permission);
+        // });
       }),
     ];
 
@@ -56,7 +64,8 @@ class ViewPermission extends ApiResource
   }
 
   private function clearence($permission_alias){
-    $alias = Str::beforeLast($this->alias, '.', $permission_alias);
+    $alias = $this->alias;
+    $alias = Str::beforeLast($alias, '.', $permission_alias);
     $alias = Str::replace($alias . '.', '', $permission_alias);
     return $alias;
   }

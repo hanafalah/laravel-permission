@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @see \Hanafalah\LaravelPermission\Schemas\Menu
+ * @method self setParamLogic(string $logic, bool $search_value = false, ?array $optionals = [])
  * @method self conditionals(mixed $conditionals)
  * @method array viewMenuList()
  */
