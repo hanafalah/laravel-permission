@@ -23,24 +23,13 @@ class ViewAddress extends ApiResource
             'zip_code'          => $this->zip_code,
             'rt'                => $this->rt,
             'rw'                => $this->rw,
-            'province'          => [
-                'id'   => $this->prop_province->id ?? null,
-                'name' => $this->prop_province->name ?? null
-            ],
-            'district'          => [
-                'id'   => $this->prop_district->id ?? null,
-                'name' => $this->prop_district->name ?? null
-            ],
-            'subdistrict'       => [
-                'id'   => $this->prop_subdistrict->id ?? null,
-                'name' => $this->prop_subdistrict->name ?? null
-            ],
-            'village'           => [
-                'id'   => $this->prop_village->id ?? null,
-                'name' => $this->prop_village->name ?? null
-            ]
+            'latitude'          => $this->latitude,
+            'longitude'         => $this->longitude,
+            'province'          => $this->prop_province,
+            'district'          => $this->prop_district,
+            'subdistrict'       => $this->prop_subdistrict,
+            'village'           => $this->prop_village
         ];
-
         return $arr;
     }
 }

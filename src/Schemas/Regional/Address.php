@@ -2,30 +2,16 @@
 
 namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
-use Hanafalah\LaravelSupport\Contracts\Data\PaginateData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Address as RegionalAddress;
 use Hanafalah\ModuleRegional\Data\AddressData;
 use Hanafalah\ModuleRegional\Enums\Address\Flag;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
 class Address extends PackageManagement implements RegionalAddress{
     protected string $__entity = 'Address';
     public static $address_model;
-
-    protected function showUsingRelation(): array{
-        return [
-            'province','district','subdistrict','village'
-        ];
-    }
-
-    protected function viewUsingRelation(): array{
-        return [];
-    }    
 
     public function prepareStoreAddress(AddressData $address_dto): Model{
         $guard = isset($address_dto->id) 
@@ -69,41 +55,5 @@ class Address extends PackageManagement implements RegionalAddress{
             $address->save();
         }
         return $this;
-    }
-
-    public function storeAddress(?AddressData $address_dto = null): array{
-        return $this->transaction(function() use ($address_dto){
-            return $this->showAddress($this->prepareStoreAddress($address_dto ?? $this->requestDTO(AddressData::class)));
-        });
-    }
-
-    public function prepareViewAddressPaginate(PaginateData $paginate_dto): LengthAwarePaginator{
-        return static::$address_model = $this->address()->paginate(...$paginate_dto->toArray())->appends(request()->all());
-    }
-
-    public function viewAddressPaginate(?PaginateData $paginate_dto = null){
-        return $this->viewEntityResource(function() use ($paginate_dto){
-            return $this->prepareViewAddressPaginate($paginate_dto ?? PaginateData::from(request()->all()));
-        });
-    }
-
-    public function prepareViewAddressList(? array $attributes = null): Collection{
-        $attributes ??= request()->all();
-        return static::$address_model = $this->address()->get();
-    }
-
-    public function viewAddressList(){
-        return $this->viewEntityResource(function(){
-           return $this->prepareViewAddressList(); 
-        });
-    }
-
-    public function address(mixed $conditionals = null): Builder{
-        $this->booting();
-        return $this->AddressModel()->with($this->viewUsingRelation())
-                ->when(isset(request()->search_model_id,request()->search_model_type),function($query){
-                    $query->where('search_model_id',request()->search_model_id)
-                        ->where('search_model_type',request()->search_model_type);
-                })->withParameters()->conditionals($conditionals);
     }
 }
