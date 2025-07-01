@@ -23,7 +23,7 @@ class ViewRole extends ApiResource
       'childs'     => $this->relationValidation('childs', function () {
         $childs = $this->childs;
         return $childs->transform(function ($child) {
-          return $child->toViewApi();
+          return $child->toViewApi()->resolve();
         });
       }),
       'created_at' => $this->created_at,

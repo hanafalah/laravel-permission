@@ -57,7 +57,6 @@ class Permission extends PackageManagement implements ContractsPermission
     }
 
     private function addPermission(PermissionData $permission_dto){
-        Log::info($permission_dto);
         $permission = $this->PermissionModel()->firstOrCreate([
             'parent_id' => $permission_dto->parent_id ?? null,
             'alias'     => $permission_dto->alias

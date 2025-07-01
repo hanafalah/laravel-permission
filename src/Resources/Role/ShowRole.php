@@ -15,7 +15,7 @@ class ShowRole extends ViewRole
     $arr = [
       'permissions' => $this->relationValidation('permissions', function () {
         return $this->permissions->transform(function ($permission) {
-          return $permission->toViewApi();
+          return $permission->toViewApi()->resolve();
         });
       })
     ];
