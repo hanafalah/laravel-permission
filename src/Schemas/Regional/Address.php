@@ -34,15 +34,15 @@ class Address extends PackageManagement implements RegionalAddress{
         }
         $address->save();
 
-        $this->setRegional($address, $address_dto->province_id, 'province')
-             ->setRegional($address, $address_dto->district_id, 'district')
-             ->setRegional($address, $address_dto->subdistrict_id, 'subdistrict')
-             ->setRegional($address, $address_dto->village_id, 'village');
+        $this->setRegional($address, 'province', $address_dto->province_id)
+             ->setRegional($address, 'district', $address_dto->district_id)
+             ->setRegional($address, 'subdistrict', $address_dto->subdistrict_id)
+             ->setRegional($address, 'village', $address_dto->village_id);
         
         return static::$address_model = $address;
     }
 
-    private function setRegional(Model &$address, ?int $id = null, string $type): self{
+    private function setRegional(Model &$address, string $type, ?int $id = null): self{
         if (isset($id)){
             $model = Str::ucfirst($type);
             $model = $this->{$model.'Model'}()->findOrFail($id);
