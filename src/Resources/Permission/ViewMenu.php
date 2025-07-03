@@ -28,7 +28,11 @@ class ViewMenu extends ApiResource
         return $this->recursiveMenus->transform(function($menu){
           return new static($menu);
         });
-      })
+      },$this->relationValidation('recursiveModules',function(){
+        return $this->recursiveModules->transform(function($module){
+          return new static($module);
+        });
+      }))      
     ];
 
     return $arr;
