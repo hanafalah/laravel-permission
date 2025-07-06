@@ -23,6 +23,7 @@ class ViewPermission extends ApiResource
       'parent_id'   => $this->parent_id,
       'alias'       => $alias,
       'original_alias' => $this->alias,
+      'type' => $this->type,
       'access'      => ($this->access ?? 0) == 1 ? true : false,
       'directory'   => $this->directory,
       'method'      => $this->method,

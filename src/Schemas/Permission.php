@@ -16,7 +16,7 @@ class Permission extends PackageManagement implements ContractsPermission
 {
     protected string $__entity = 'Permission';
     public static $permission_model;
-    protected mixed $__order_by_created_at = false; //asc, desc, false
+    protected mixed $__order_by_created_at = ['ordering','asc']; //asc, desc, false
 
     public function prepareStorePermission(?array $attributes = null): array{        
         $attributes ??= request()->all();
