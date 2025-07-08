@@ -32,12 +32,14 @@ class Role extends BaseModel
     }
 
     public function showUsingRelation(): array{
-        return ['permissions' => function($query){
-            if (isset(request()->role_id)){
-                $query->checkAccess(request()->role_id);
+        return [
+            'permissions' => function($query){
+                if (isset(request()->role_id)){
+                    $query->checkAccess(request()->role_id);
+                }
+                $query->whereNull('parent_id')->with('recursiveChilds');
             }
-            $query->with('recursiveChilds');
-        }];
+        ];
     }
 
     public function getViewResource(){return ViewRole::class;}
