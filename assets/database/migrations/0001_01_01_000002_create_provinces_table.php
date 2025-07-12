@@ -27,7 +27,7 @@ return new class extends Migration
         $table_name = $this->__table->getTable();
         if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
-                $table->id();
+                $table->ulid('id');
                 $table->string('code', 100)->nullable(true);
                 $table->string('name', 100)->nullable(false);
                 $table->string('latitude', 50)->nullable();
