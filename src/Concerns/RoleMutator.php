@@ -27,7 +27,8 @@ trait RoleMutator
         if (is_object($role) && $role instanceof Role && $as_object) {
             return $role;
         }
-        $role = $this->RoleModel()->where((is_numeric($role)) ? $this->RoleModel()->getKeyName() : 'name', $role)->first();
+        $role = $this->RoleModel()->where($this->RoleModel()->getKeyName(), $role)->first();
+        $role ??= $this->RoleModel()->where('name', $role)->first();
         return ($as_object) ? $role : $role->getKey();
     }
 

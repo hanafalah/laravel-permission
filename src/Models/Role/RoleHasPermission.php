@@ -3,9 +3,11 @@
 namespace Hanafalah\LaravelPermission\Models\Role;
 
 use Hanafalah\LaravelSupport\Models\BaseModel;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class RoleHasPermission extends BaseModel
 {
+    use HasUlids;
 
     public $incrementing = false;
     protected $keyType = 'string';

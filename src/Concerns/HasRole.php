@@ -4,6 +4,7 @@ namespace Hanafalah\LaravelPermission\Concerns;
 
 use Hanafalah\LaravelHasProps\Models\Scopes\HasCurrentScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 trait HasRole
 {
@@ -42,12 +43,13 @@ trait HasRole
     public function syncRoles(array $roles = []): void{
         $roles = $this->readRoles($roles);
         $this->roles()->detach();
-        $this->roles()->attach($roles, [
-            'model_type' => $this->getMorphClass(),
-            'current'    => 0,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        $this->addRole($roles);
+        // $this->roles()->attach($roles, [
+        //     'model_type' => $this->getMorphClass(),
+        //     'current'    => 0,
+        //     'created_at' => now(),
+        //     'updated_at' => now()
+        // ]);
         $role = end($roles);
         $model_has_role = $this->modelHasRole()
             ->where('model_id', $this->getKey())
@@ -75,12 +77,15 @@ trait HasRole
         return $role;
     }
 
-    public function addRole(object|string $role): void{
-        $this->roles()->attach(is_object($role) ? $role : $this->readRole($role, true), [
+    public function addRole(object|array|string $role, ?array $attributes = []): void{
+        $create = [
             'model_type' => $this->getMorphClass(),
+            'current'    => $attributes['current'] ?? 1,
             'created_at' => now(),
             'updated_at' => now()
-        ]);
+        ];
+        if ($this->ModelHasRoleModel()->getKeyType() == 'string') $create['id'] = Str::random(26);
+        $this->roles()->attach(is_object($role) || is_array($role) ? $role : $this->readRole($role, true), $create);
     }
 
     public function flushRoles(): void{
