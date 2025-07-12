@@ -3,9 +3,13 @@
 namespace Hanafalah\LaravelPermission\Models\Permission;
 
 use Hanafalah\LaravelSupport\Models\BaseModel;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class ModelHasPermission extends BaseModel
 {
+    use HasUlids;
+    
+    public $incrementing = false;
     protected $keyType    = 'string';
     protected $primaryKey = 'id';
     protected $fillable   = [

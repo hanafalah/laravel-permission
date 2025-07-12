@@ -30,7 +30,7 @@ return new class extends Migration
                 $permission = app(config('database.models.Permission', Permission::class));
                 $role       = app(config('database.models.Role', Role::class));
 
-                $table->id();
+                $table->ulid('id')->primary();
                 $table->foreignIdFor($permission::class)
                     ->nullable(false)
                     ->index()->constrained()->cascadeOnDelete()

@@ -28,7 +28,7 @@ return new class extends Migration
             Schema::create($table_name, function (Blueprint $table) {
                 $permission = app(config('database.models.Permission', Permission::class));
 
-                $table->id();
+                $table->ulid('id')->primary();
                 $table->foreignIdFor($permission::class)
                     ->nullable(false)
                     ->index()->constrained()->cascadeOnDelete()

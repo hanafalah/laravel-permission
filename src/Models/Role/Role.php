@@ -7,11 +7,15 @@ use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Hanafalah\LaravelPermission\Concerns\HasPermission;
 use Hanafalah\LaravelPermission\Resources\Role\{ViewRole, ShowRole};
 use Hanafalah\LaravelSupport\Models\BaseModel;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class Role extends BaseModel
 {
-    use SoftDeletes, HasPermission, HasProps;
+    use SoftDeletes, HasPermission, HasProps, HasUlids;
 
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $primaryKey = 'id';
     protected $list  = ['id', 'parent_id', 'name', 'props'];
     protected $casts = [
         'name' => 'string'
