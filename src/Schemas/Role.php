@@ -22,14 +22,17 @@ class Role extends PackageManagement implements ContractsRole
     }
 
     public function prepareStoreRole(RoleData $role_dto): Model{
-        $add   = ['name' => $role_dto->name];
+        $add   = [
+            'name' => $role_dto->name,
+            'parent_id' => $role_dto->parent_id
+        ];
         if (isset($role_dto->id)){
             $guard = ['id' => $role_dto->id];
             $create = [$guard,$add];
         }else{
             $create = [$add];
         }
-        $role  = $this->role()->updateOrCreate(...$create);
+        $role  = $this->usingEntity()->updateOrCreate(...$create);
         $this->fillingProps($role,$role_dto->props);
 
         if (isset($role_dto->permission_ids) || isset($role_dto->permissions)) {
