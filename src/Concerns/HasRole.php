@@ -43,13 +43,7 @@ trait HasRole
     public function syncRoles(array $roles = []): void{
         $roles = $this->readRoles($roles);
         $this->roles()->detach();
-        $this->addRole($roles);
-        // $this->roles()->attach($roles, [
-        //     'model_type' => $this->getMorphClass(),
-        //     'current'    => 0,
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
+        $this->addRole($roles,['current' => 0]);
         $role = end($roles);
         $model_has_role = $this->modelHasRole()
             ->where('model_id', $this->getKey())
