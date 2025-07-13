@@ -28,7 +28,7 @@ return new class extends Migration
             Schema::create($table_name, function (Blueprint $table) {
                 $role = app(config('database.models.Role', Role::class));
 
-                $table->ulid('id')->primary();
+                $table->id();
                 $table->foreignIdFor($role::class)
                     ->nullable(false)
                     ->index()->constrained()->cascadeOnDelete()

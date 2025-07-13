@@ -84,7 +84,6 @@ trait HasRole
             'created_at' => now(),
             'updated_at' => now()
         ];
-        if ($this->ModelHasRoleModel()->getKeyType() == 'string') $create['id'] = Str::random(26);
         $this->roles()->attach(is_object($role) || is_array($role) ? $role : $this->readRole($role, true), $create);
     }
 

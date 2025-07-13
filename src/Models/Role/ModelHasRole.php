@@ -8,11 +8,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class ModelHasRole extends BaseModel
 {
-    use HasCurrent, HasUlids;
+    use HasCurrent;
 
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $primaryKey = 'id';
     public $current_conditions = [
         'model_type',
         'model_id'

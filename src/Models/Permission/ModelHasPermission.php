@@ -7,11 +7,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class ModelHasPermission extends BaseModel
 {
-    use HasUlids;
-    
-    public $incrementing = false;
-    protected $keyType    = 'string';
-    protected $primaryKey = 'id';
     protected $fillable   = [
         'id',
         'permission_id',
