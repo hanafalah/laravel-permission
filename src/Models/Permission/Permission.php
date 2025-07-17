@@ -20,7 +20,7 @@ class Permission extends BaseModel
     protected $keyType = 'string';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'parent_id', 'name', 'alias', 'root', 'type',
+        'id', 'parent_id', 'name', 'alias', 'type',
         'guard_name', 'visibility'
     ];
 
@@ -49,7 +49,7 @@ class Permission extends BaseModel
             }
         });
         static::created(function ($query) {
-            static::rootGenerator($query);
+            // static::rootGenerator($query);
         });
         static::updating(function($query){
             if ($query->type == Type::PERMISSION->value) {
@@ -58,7 +58,7 @@ class Permission extends BaseModel
             }
         });
         static::updated(function ($query) {
-            static::rootGenerator($query);
+            // static::rootGenerator($query);
         });
     }
 
