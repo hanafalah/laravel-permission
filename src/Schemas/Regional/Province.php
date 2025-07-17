@@ -1,6 +1,6 @@
 <?php
 
-namespace Hanafalah\ModuleRegional\Schemas\Regional\Schemas;
+namespace Hanafalah\ModuleRegional\Schemas\Regional;
 
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Province as RegionalProvince;
