@@ -8,5 +8,5 @@ use Hanafalah\ModuleRegional\Contracts\Schemas\Citizenship\Country as Citizenshi
 class Country extends PackageManagement implements CitizenshipCountry
 {
     protected string $__entity = 'Country';
-    public static $country_model;
+    public $country_model;
 }

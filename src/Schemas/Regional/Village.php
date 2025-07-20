@@ -8,5 +8,5 @@ use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Village as RegionalVilla
 class Village extends PackageManagement implements RegionalVillage
 {
     protected string $__entity = 'Village';
-    public static $village_model;
+    public $village_model;
 }

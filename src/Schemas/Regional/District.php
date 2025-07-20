@@ -8,5 +8,5 @@ use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\District as RegionalDist
 class District extends PackageManagement implements RegionalDistrict
 {
     protected string $__entity = 'District';
-    public static $district_model;
+    public $district_model;
 }

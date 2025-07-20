@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class Address extends PackageManagement implements RegionalAddress{
     protected string $__entity = 'Address';
-    public static $address_model;
+    public $address_model;
 
     public function prepareStoreAddress(AddressData $address_dto): Model{
         $guard = isset($address_dto->id) 
@@ -39,7 +39,7 @@ class Address extends PackageManagement implements RegionalAddress{
              ->setRegional($address, 'subdistrict', $address_dto->subdistrict_id)
              ->setRegional($address, 'village', $address_dto->village_id);
         
-        return static::$address_model = $address;
+        return $this->address_model = $address;
     }
 
     private function setRegional(Model &$address, string $type, ?int $id = null): self{

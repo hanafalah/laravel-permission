@@ -8,5 +8,5 @@ use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Subdistrict as RegionalS
 class Subdistrict extends PackageManagement implements RegionalSubdistrict
 {
     protected string $__entity = 'Subdistrict';
-    public static $subdistrict_model;
+    public $subdistrict_model;
 }

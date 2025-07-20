@@ -8,5 +8,5 @@ use Hanafalah\ModuleRegional\Contracts\Schemas\Regional\Province as RegionalProv
 class Province extends PackageManagement implements RegionalProvince
 {
     protected string $__entity = 'Province';
-    public static $province_model;
+    public $province_model;
 }
