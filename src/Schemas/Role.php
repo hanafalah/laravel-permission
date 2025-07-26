@@ -11,7 +11,7 @@ use Hanafalah\LaravelSupport\Supports\PackageManagement;
 class Role extends PackageManagement implements ContractsRole
 {
     protected string $__entity = 'Role';
-    public static $role_model;
+    public $role_model;
 
     public function showRole(?Model $model = null): array{
         $id ??= $model->id ?? request()->id;
@@ -22,14 +22,17 @@ class Role extends PackageManagement implements ContractsRole
     }
 
     public function prepareStoreRole(RoleData $role_dto): Model{
-        $add   = ['name' => $role_dto->name];
+        $add   = [
+            'name' => $role_dto->name,
+            'parent_id' => $role_dto->parent_id
+        ];
         if (isset($role_dto->id)){
             $guard = ['id' => $role_dto->id];
             $create = [$guard,$add];
         }else{
             $create = [$add];
         }
-        $role  = $this->role()->updateOrCreate(...$create);
+        $role  = $this->usingEntity()->updateOrCreate(...$create);
         $this->fillingProps($role,$role_dto->props);
 
         if (isset($role_dto->permission_ids) || isset($role_dto->permissions)) {
@@ -45,7 +48,7 @@ class Role extends PackageManagement implements ContractsRole
             $role->save();
         }
 
-        return static::$role_model = $role;
+        return $this->role_model = $role;
     }
 
     public function role(mixed $conditionals = null): Builder{

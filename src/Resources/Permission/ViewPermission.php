@@ -29,13 +29,10 @@ class ViewPermission extends ApiResource
       'method'      => $this->method,
       'slug'        => $this->slug,
       'accessibility' => $this->relationValidation('childs', function () {
-        // return $this->childs->transform(function ($permission) {
-        //   return new static($permission);
-        // });
         return (object) $this->childs->where('type', Type::PERMISSION->value)->mapWithKeys(function ($permission) {
           $alias = $this->clearence($permission->alias);
           return [
-            $alias => $permission->access ?? false
+            $alias => (bool) $permission->access ?? false
           ];
         });
       }),
@@ -44,12 +41,9 @@ class ViewPermission extends ApiResource
           $alias = $this->clearence($permission->alias,false);
           if (Str::startsWith($alias, 'show.')) $alias = Str::after($alias,'show.');
           return [
-            $alias => $permission->access ?? false
+            $alias => (bool) $permission->access ?? false
           ];
         });
-        // return $this->recursiveModules->transform(function ($permission) {
-        //   return new static($permission);
-        // });
       }),
     ];
 

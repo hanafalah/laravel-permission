@@ -3,11 +3,10 @@
 namespace Hanafalah\LaravelPermission\Models\Permission;
 
 use Hanafalah\LaravelSupport\Models\BaseModel;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class ModelHasPermission extends BaseModel
 {
-    protected $keyType    = 'string';
-    protected $primaryKey = 'id';
     protected $fillable   = [
         'id',
         'permission_id',

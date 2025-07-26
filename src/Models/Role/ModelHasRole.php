@@ -4,6 +4,7 @@ namespace Hanafalah\LaravelPermission\Models\Role;
 
 use Hanafalah\LaravelHasProps\Concerns\HasCurrent;
 use Hanafalah\LaravelSupport\Models\BaseModel;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class ModelHasRole extends BaseModel
 {

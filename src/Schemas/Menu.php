@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Menu extends Permission implements ContractsMenu
 {
     protected string $__entity = 'Menu';
-    public static $menu_model;
+    public $menu_model;
     protected mixed $__order_by_created_at = false; //asc, desc, false
 
     public function prepareViewMenuList(): Collection{
@@ -21,7 +21,7 @@ class Menu extends Permission implements ContractsMenu
         $menu = $this->menu()->whereHas('roleHasPermission',function($query) use ($attributes){
                                 $query->where('role_id',$attributes['role_id']);
                             })->get();
-        return static::$menu_model = $menu;
+        return $this->menu_model = $menu;
     }
 
     public function menu(mixed $conditionals = null): Builder{

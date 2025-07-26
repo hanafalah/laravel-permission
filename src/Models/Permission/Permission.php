@@ -2,25 +2,25 @@
 
 namespace Hanafalah\LaravelPermission\Models\Permission;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\LaravelPermission\Enums\{
     Permission\Type
 };
-
 use Illuminate\Support\Str;
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
-use Hanafalah\LaravelPermission\Resources\Permission\ViewMenu;
 use Hanafalah\LaravelPermission\Resources\Permission\ViewPermission;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class Permission extends BaseModel
 {
-    use HasProps;
+    use HasProps, HasUlids;
 
     public $timestamps = false;
+    protected $keyType = 'string';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'parent_id', 'name', 'alias', 'root', 'type',
+        'id', 'parent_id', 'name', 'alias', 'type',
         'guard_name', 'visibility'
     ];
 
@@ -49,7 +49,7 @@ class Permission extends BaseModel
             }
         });
         static::created(function ($query) {
-            static::rootGenerator($query);
+            // static::rootGenerator($query);
         });
         static::updating(function($query){
             if ($query->type == Type::PERMISSION->value) {
@@ -58,7 +58,7 @@ class Permission extends BaseModel
             }
         });
         static::updated(function ($query) {
-            static::rootGenerator($query);
+            // static::rootGenerator($query);
         });
     }
 

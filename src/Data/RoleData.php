@@ -13,6 +13,10 @@ class RoleData extends Data implements DataRoleData
     #[MapName('id')]
     public mixed $id = null;
 
+    #[MapInputName('parent_id')]
+    #[MapName('parent_id')]
+    public mixed $parent_id = null;
+
     #[MapInputName('name')]
     #[MapName('name')]
     public string $name;

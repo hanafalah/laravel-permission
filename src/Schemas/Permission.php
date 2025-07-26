@@ -10,12 +10,11 @@ use Hanafalah\LaravelPermission\Contracts\Schemas\{
 };
 use Hanafalah\LaravelPermission\Contracts\Data\PermissionData;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Illuminate\Support\Facades\Log;
 
 class Permission extends PackageManagement implements ContractsPermission
 {
     protected string $__entity = 'Permission';
-    public static $permission_model;
+    public $permission_model;
     protected mixed $__order_by_created_at = ['ordering','asc']; //asc, desc, false
 
     public function prepareStorePermission(?array $attributes = null): array{        
@@ -32,7 +31,7 @@ class Permission extends PackageManagement implements ContractsPermission
 
         $permission = $this->permission()->whereNull('parent_id')->with('recursiveChilds')->get();
 
-        return static::$permission_model = $permission;
+        return $this->permission_model = $permission;
     }
 
     public function prepareShowPermission(?Model $model = null, ?array $attributes = null): Model{
@@ -53,7 +52,7 @@ class Permission extends PackageManagement implements ContractsPermission
                 $model->load($this->showUsingRelation());
             }
         }
-        return static::$permission_model = $model;
+        return $this->permission_model = $model;
     }
 
     private function addPermission(PermissionData $permission_dto){
