@@ -24,6 +24,7 @@ return [
         ]
     ],
     'commands' => [
-        Commands\InstallMakeCommand::class
+        Commands\InstallMakeCommand::class,
+        Commands\SeedCommand::class
     ]
 ];

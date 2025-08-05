@@ -11,6 +11,7 @@ class CommandServiceProvider extends ServiceProvider
 {
     private $commands = [
         Commands\InstallMakeCommand::class,
+        Commands\SeedCommand::class
     ];
 
 
