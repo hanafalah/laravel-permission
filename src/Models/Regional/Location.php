@@ -5,9 +5,56 @@ namespace Hanafalah\ModuleRegional\Models\Regional;
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleRegional\Concerns\LocationHasAddress;
+use Hanafalah\ModuleRegional\Resources\Location\{ViewLocation, ShowLocation};
 
 class Location extends BaseModel
 {
     use HasProps, LocationHasAddress;
+
     public $timestamps  = false;
+
+    protected $casts = [
+        // 'name' => 'string',
+        'code' => 'string',
+    ];
+
+    public function getViewResource(){
+        return ViewLocation::class;
+    }
+
+    public function getShowResource(){
+        return ShowLocation::class;
+    }
+
+    public function showUsingRelation(){
+        return $this->viewUsingRelation();
+    }
+
+    public function getLocation(?string $type = null,?string $name = null){
+        $type ??= $this->getMorphClass();
+        switch ($type) {
+            case 'Province':
+                return 'Prov. '.$name ?? $this->name;
+            break;
+            case 'District':
+                return implode(', ',[
+                    $this->getLocation('Province',$this->province?->name),
+                    $this->type == 1 ? 'Kota. ' :'Kab. '.
+                    $name ?? $this->name
+                ]);
+            break;
+            case 'Subdistrict':
+                return implode(', ',[
+                    $this->getLocation('District',$this->district?->name),
+                    'Kec. '.$name ?? $this->name
+                ]);
+            break;
+            case 'Village':
+                return implode(', ',[
+                    $this->getLocation('Subdistrict',$this->subdistrict?->name),
+                    $name ?? $this->name
+                ]);
+            break;
+        }
+    }
 }
