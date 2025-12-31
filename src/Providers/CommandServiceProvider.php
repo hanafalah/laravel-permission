@@ -1,32 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Hanafalah\ModuleRegional\Providers;
+namespace Hanafalah\LaravelPermission\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Hanafalah\ModuleRegional\Commands;
+use Hanafalah\LaravelPermission\Commands;
 
 class CommandServiceProvider extends ServiceProvider
 {
-    private $commands = [
-        Commands\InstallMakeCommand::class,
-        Commands\SeedCommand::class
+    protected $__commands = [
+        Commands\InstallMakeCommand::class
     ];
-
 
     public function register()
     {
-        $this->commands(config('module-regional.commands', $this->commands));
+        $this->commands(config('laravel-permission.commands', $this->__commands));
     }
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
 
     public function provides()
     {
-        return $this->commands;
+        return $this->__commands;
     }
 }

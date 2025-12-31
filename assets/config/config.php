@@ -1,13 +1,17 @@
 <?php
 
-use Hanafalah\ModuleRegional\Commands;
+use Hanafalah\LaravelPermission\{
+    Models,
+    Commands,
+    Contracts
+};
 
 return [
-    'namespace' => 'Hanafalah\\ModuleRegional',
+    'namespace' => 'Hanafalah\\LaravelPermission',
     'app' => [
         'contracts' => [
             //ADD YOUR CONTRACTS HERE
-        ],
+        ]
     ],
     'libs' => [
         'model' => 'Models',
@@ -20,11 +24,13 @@ return [
     ],
     'database' => [
         'models' => [
-            //ADD YOUR MODEL HERE
+            //ADD YOUR MODELS HERE
         ]
     ],
     'commands' => [
-        Commands\InstallMakeCommand::class,
-        Commands\SeedCommand::class
+        Commands\InstallMakeCommand::class
+    ],
+    'policies' => [
+        //alias => policy namespace
     ]
 ];

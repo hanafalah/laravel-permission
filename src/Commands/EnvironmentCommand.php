@@ -1,20 +1,22 @@
 <?php
 
-namespace Hanafalah\ModuleRegional\Commands;
+namespace Hanafalah\LaravelPermission\Commands;
 
 use Hanafalah\LaravelSupport\{
-    Commands\BaseCommand
+    Commands\BaseCommand,
+    Concerns\ServiceProvider\HasMigrationConfiguration,
+    Concerns\Support\HasMicrotenant
 };
-use Hanafalah\LaravelSupport\Concerns\ServiceProvider\HasMigrationConfiguration;
 
 class EnvironmentCommand extends BaseCommand
 {
     use HasMigrationConfiguration;
+    use HasMicrotenant;
 
     protected function init(): self
     {
         //INITIALIZE SECTION
-        $this->setLocalConfig('module-regional');
+        $this->initConfig()->setLocalConfig('laravel-permission');
         return $this;
     }
 

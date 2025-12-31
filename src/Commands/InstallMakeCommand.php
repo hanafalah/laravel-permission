@@ -1,6 +1,6 @@
 <?php
 
-namespace Hanafalah\ModuleRegional\Commands;
+namespace Hanafalah\LaravelPermission\Commands;
 
 class InstallMakeCommand extends EnvironmentCommand
 {
@@ -9,7 +9,7 @@ class InstallMakeCommand extends EnvironmentCommand
      *
      * @var string
      */
-    protected $signature = 'module-regional:install';
+    protected $signature = 'laravel-permission:install';
 
 
     /**
@@ -17,33 +17,28 @@ class InstallMakeCommand extends EnvironmentCommand
      *
      * @var string
      */
-    protected $description = 'Command ini digunakan untuk installing awal module regional';
+    protected $description = 'Command ini digunakan untuk installing permission';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $provider = 'Hanafalah\ModuleRegional\ModuleRegionalServiceProvider';
+        $provider = 'Hanafalah\LaravelPermission\LaravelPermissionServiceProvider';
 
-        $this->comment('Installing Module Regional...');
+        $this->comment('Installing Laravel Permission...');
         $this->callSilent('vendor:publish', [
             '--provider' => $provider,
             '--tag'      => 'config'
         ]);
-        $this->info('✔️  Created config/module-regional.php');
+        $this->info('✔️  Created config/laravel-permission.php');
 
         $this->callSilent('vendor:publish', [
             '--provider' => $provider,
             '--tag'      => 'migrations'
         ]);
-
-        $this->callSilent('vendor:publish', [
-            '--provider' => $provider,
-            '--tag'      => 'data'
-        ]);
         $this->info('✔️  Created migrations');
 
-        $this->comment('hanafalah/module-regional installed successfully.');
+        $this->comment('hanafalah/laravel-permission installed successfully.');
     }
 }

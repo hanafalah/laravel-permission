@@ -1,8 +1,8 @@
 {
-    "name": "hanafalah/module-regional",
+    "name": "hanafalah/laravel-permission",
     "autoload": {
         "psr-4": {
-            "Hanafalah\\ModuleRegional\\": "src/"
+            "Hanafalah\\LaravelPermission\\": "src/"
         }
     },
     "authors": [
@@ -11,14 +11,14 @@
             "email": "hamzahnafalah@gmail.com"
         }
     ],
+    "require": {
+        "hanafalah/laravel-support": "dev-main"
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "Hanafalah\\ModuleRegional\\ModuleRegionalServiceProvider"
+                "Hanafalah\\LaravelPermission\\LaravelPermissionServiceProvider"
             ]
         }
-    },
-    "require": {
-        "hanafalah/laravel-support": "dev-main"
     }
 }
